@@ -43,19 +43,19 @@ public class Scheduler {
     }
 
 
-    @PostConstruct
-    public void init() {
-        // 서비스 시작 시 한 번 실행할 작업
-        try {
-            executeWeatherTasks();
-//            executeStrayTasks();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            // 다른 예외에 대한 처리
-            e.printStackTrace();
-        }
-    }
+//    @PostConstruct
+//    public void init() {
+//        // 서비스 시작 시 한 번 실행할 작업
+//        try {
+//            executeWeatherTasks();
+////            executeStrayTasks();
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        } catch (Exception e) {
+//            // 다른 예외에 대한 처리
+//            e.printStackTrace();
+//        }
+//    }
 
 
     // 초 분 시 일 월 요일
