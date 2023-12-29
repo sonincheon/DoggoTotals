@@ -11,6 +11,8 @@ const PayStore = (props) => {
   const [title,setTitle] = useState();
   const [isTrue,setIsTrue]=useState();
   const [checking,setChecking]=useState(false);
+  const [kakaoId, setKakaoId] = useState("");
+  const [kakaoPw, setKakaoPw] = useState("");
 
   return (
     <PayContext.Provider
@@ -22,7 +24,9 @@ const PayStore = (props) => {
         salesPrice,setSalesPrice,
         title,setTitle,
         isTrue,setIsTrue,
-        checking,setChecking
+        checking,setChecking,
+        kakaoId,setKakaoId,
+        kakaoPw,setKakaoPw
       }}
     >
       {props.children}

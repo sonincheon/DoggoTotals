@@ -3,6 +3,7 @@ package com.Doggo.DoggoEx.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -64,6 +65,20 @@ public class KakaoService {
         }
     }
 
+    @Data
+    public class KakaoResponse {
+        private String id;
+        private String email;
+
+        @Override
+        public String toString() {
+            return "KakaoResponse{" +
+                    "id='" + id + '\'' +
+                    ", email='" + email + '\'' +
+                    '}';
+        }
+    }
+
     // 카카오 이메일 받아오기
     public String kakaoEmail(String accessToken) {
         try {
@@ -91,9 +106,13 @@ public class KakaoService {
                 JsonNode jsonNode = objectMapper.readTree(response.getBody());
                 JsonNode kakaoAccountNode = jsonNode.path("kakao_account");
                 String email = kakaoAccountNode.path("email").asText();
+                String id = jsonNode.path("id").asText(); // ID 값 추가
                 if (email != null) {
                     log.info("Received email: {}", email);
-                    return email;
+                    KakaoResponse responseObj = new KakaoResponse();
+                    responseObj.setId(id);
+                    responseObj.setEmail(email);
+                    return responseObj.toString();
                 } else {
                     log.warn("카카오 이메일이 전송되지 않음");
                     return null;

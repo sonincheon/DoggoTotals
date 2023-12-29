@@ -38,12 +38,12 @@ public class EmailService {
         message.addRecipients(RecipientType.TO, to);
 
         // 이메일 제목 설정
-        message.setSubject("멍냥멍냥 인증번호 발송");
+        message.setSubject("PET MEMOIR 인증번호 발송");
 
         // 이메일 내용 작성
         String msgg = "";
         msgg += "<div style='margin:20px; text-align: center;'>";
-        msgg += "<h1> 🐶안녕하세요 멍냥멍냥입니다.😺</h1>";
+        msgg += "<h1> 🐶안녕하세요 PET MEMOIR입니다.😺</h1>";
         msgg += "<br>";
         msgg += "<h4>아래 코드를 입력해 반려동물과의 소중한 추억을 남겨보세요!</h4>";
         msgg += "<br>";
@@ -60,7 +60,7 @@ public class EmailService {
 
         // 이메일 내용 및 보내는 사람 설정
         message.setText(msgg, "utf-8", "html");
-        message.setFrom(new InternetAddress("bowwow-meow@naver.com", "멍냥멍냥"));//보내는 사람
+        message.setFrom(new InternetAddress("bowwow-meow@naver.com", "PET MEMOIR Corp."));//보내는 사람
 
         // 생성된 이메일 메시지 반환
         return message;

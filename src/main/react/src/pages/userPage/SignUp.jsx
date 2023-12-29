@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Modal from "../../utill/Modal";
@@ -12,6 +12,7 @@ import { ko } from "date-fns/locale";
 import { subDays, subYears } from "date-fns";
 import upArrowImage from "../../img/up-arrow.png";
 import downArrowImage from "../../img/down-arrow.png";
+import { PayContext } from "../../context/Paystore";
 
 const Container = styled.div`
   width: 500px;
@@ -318,6 +319,13 @@ const SignUp = () => {
   const [useCheck, setUseCheck] = useState(false);
   const [marketingCheck, setMarketingCheck] = useState(false);
 
+  // 카카오 아이디, 비밀번호
+  const context = useContext(PayContext);
+  const { kakaoId, kakaoPw, setKakaoId, setKakaoPw } = context;
+
+  // 카카오 회원가입 시, 아이디, 비밀번호 input 비활성화
+  const [readOnly, setReadOnly] = useState(false);
+
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -521,7 +529,24 @@ const SignUp = () => {
     } else {
       setAllCheck(false);
     }
+    if (kakaoId !== "" && kakaoPw !== "") {
+        setInputId(kakaoId);
+        setInputPw(kakaoPw);
+        setPwConfirm(kakaoPw);
+        setAble(false);
+        setReadOnly(true);
+        setIsId(true);
+        setIsPw(true);
+        setIsPwConfirm(true);
+        }
   }, [ageCheck, useCheck, marketingCheck]);
+
+  useEffect(() => {
+      return () => {
+        setKakaoId("");
+        setKakaoPw("");
+      };
+    }, []);
 
   const formatDate = (date) => {
     const year = date.getFullYear();
@@ -556,6 +581,7 @@ const SignUp = () => {
               placeholder="아이디(이메일)"
               value={inputId}
               onChange={onChangeId}
+              readOnly={readOnly}
             />
             <Button2 onClick={() => SingupIdCheck(inputId)}>중복체크</Button2>
           </Items>
@@ -576,6 +602,7 @@ const SignUp = () => {
               placeholder="인증번호를 입력해주세요"
               value={inputCert}
               onChange={(e) => setInputCert(e.target.value)}
+              readOnly={readOnly}
             />
             <Button2 onClick={handleCertification} disabled={btnAble}>
               인증
@@ -589,6 +616,7 @@ const SignUp = () => {
               placeholder="패스워드"
               value={inputPw}
               onChange={onChangePw}
+              readOnly={readOnly}
             />
           </Items>
           <Hint>
@@ -605,6 +633,7 @@ const SignUp = () => {
               placeholder="패스워드 확인"
               value={pwConfirm}
               onChange={onChangePwConfirm}
+              readOnly={readOnly}
             />
           </Items>
           <Hint>

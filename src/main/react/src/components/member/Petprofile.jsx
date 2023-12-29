@@ -34,7 +34,6 @@ const BoxTitle = styled.div`
   font-size: 32px;
   font-weight: 900;
   margin-bottom: 1rem;
-  border: 1px solid black;
 `;
 
 const BoxContent1 = styled.div`
@@ -46,10 +45,8 @@ const BoxContent1 = styled.div`
   margin-bottom: 1rem;
   border-radius: 10px;
   padding: 10px;
-  border: 1px solid black;
   min-width: 630px;
   padding: 1rem;
-  border: 1px solid black;
 `;
 
 const PetProfile = styled.img`
@@ -57,7 +54,6 @@ const PetProfile = styled.img`
   height: 200px;
   border-radius: 100%;
   margin-left: 1rem;
-  border: 1px solid black;
 `;
 
 const PetInfo1 = styled.div`
@@ -111,7 +107,6 @@ const Btn = styled.button`
   border: none;
   white-space: nowrap;
   cursor: pointer;
-  border: 1px solid black;
 
   &:active {
     background-color: #575656;
@@ -130,7 +125,6 @@ const Btn2 = styled.button`
   margin-left: 5px;
   border: none;
   cursor: pointer;
-  border: 1px solid black;
 `;
 
 // 나이 계산 함수
@@ -186,7 +180,6 @@ const Petprofile = () => {
       }
     } catch (e) {
       console.error(e);
-      alert("에러 발생");
     }
   };
 
