@@ -17,6 +17,12 @@ import AdminAxiosApi from "../../api/AdminAxios";
 const ChartSize = styled.div`
   width: 100%;
   height: 400px;
+
+  .recharts-legend-wrapper {
+    .recharts-default-legend {
+      text-align: right !important; 
+    }
+  }
 `;
 
 const Adminmain2 = () => {

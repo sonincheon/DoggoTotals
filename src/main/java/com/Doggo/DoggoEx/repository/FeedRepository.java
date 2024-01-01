@@ -14,5 +14,6 @@ import java.util.Optional;
 public interface FeedRepository extends JpaRepository<Feed, Long> {
     Optional<Feed> findByFeedName(String name);
     List<Feed> findByFeedType(FeedType feedType);
-    Page<Feed> findByFeedTypeContaining(String filter, Pageable pageable);
+    Page<Feed> findByFeedType(FeedType feedType, Pageable pageable);
+
 }

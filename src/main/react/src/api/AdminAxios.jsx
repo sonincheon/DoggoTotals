@@ -2,7 +2,7 @@ import axios from "axios";
 import Common from "../utill/Common";
 import AxiosInstance from "../utill/AxiosInstance";
 
-const MUNG_HOST = "";
+const MUNG_HOST = "http://localhost:8111";
 
 
 const AdminAxiosApi = {
@@ -71,7 +71,7 @@ const AdminAxiosApi = {
   // 문의 페이지 수 조회
   QnaPage: async (page, size, filter) => {
     return await AxiosInstance.get(
-      MUNG_HOST + `/admin/qna/count?filter=${filter}page=${page}&size=${size}`
+      MUNG_HOST + `/admin/qna/list/count?filter=${filter}&page=${page}&size=${size}`
     );
   },
   // 문의 페이지네이션 조회
@@ -93,11 +93,11 @@ const AdminAxiosApi = {
   // -------------------------------- Admin Feed
   // 전체조회
   FeedAllList: async () => {
-    return await AxiosInstance.get(MUNG_HOST + `/admin/feed/feeds`);
+    return await axios.get(MUNG_HOST + `/admin/feed/feeds`);
   },
   // 상세조회
   FeedDetail: async (id) => {
-    return await AxiosInstance.get(MUNG_HOST + `/admin/feed/detail/${id}`);
+    return await axios.get(MUNG_HOST + `/admin/feed/detail/${id}`);
   },
   // 사료 추가 → 만들어둔거 쓰기 FeedReg
   // 사료 수정
@@ -111,21 +111,21 @@ const AdminAxiosApi = {
       feedPrice: feedPrice,
       feedInfo: feedInfo,
     };
-    return await AxiosInstance.put(MUNG_HOST + `/admin/feed/modify/${id}`, FeedData);
+    return await axios.put(MUNG_HOST + `/admin/feed/modify/${id}`, FeedData);
   },
   // 사료 삭제
   FeedDelete: async (id) => {
-    return await AxiosInstance.delete(MUNG_HOST + `/feed/delete/${id}`);
+    return await axios.delete(MUNG_HOST + `/feed/delete/${id}`);
   },
   // 사료 페이지 수 조회
   FeedPage: async (page, size, filter) => {
-    return await AxiosInstance.get(
+    return await axios.get(
       MUNG_HOST + `/admin/feed/list/count?filter=${filter}&page=${page}&size=${size}`
     );
   },
   // 사료 페이지네이션
   FeedPageList: async (page, size, filter) => {
-    return await AxiosInstance.get(
+    return await axios.get(
       MUNG_HOST + `/admin/feed/list/page?filter=${filter}&page=${page}&size=${size}`
     );
   },

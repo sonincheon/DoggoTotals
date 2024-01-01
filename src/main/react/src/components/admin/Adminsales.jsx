@@ -12,7 +12,6 @@ const Adminsales = () => {
   const [orderstatus, setOrderstatus] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
   const [totalPage, setTotalPage] = useState(0); // 총 페이지 수
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [isTrue, setIsTrue] = useState(false);
   const [filter, setFilter] = useState("all");
   const [invoiceInput, setInvoiceInput] = useState("");
@@ -23,10 +22,7 @@ const Adminsales = () => {
   const reRender = () => {
     setIsTrue((prev) => !prev);
   };
-  // 분류 버튼
-  // const HandleCategoryChange = (value) => {
-  //   setSelectedCategory(value);
-  // };
+
   // 날짜 포멧
   const formatDate = (dateString) => {
     const options = {
@@ -132,11 +128,11 @@ const Adminsales = () => {
     setOrderStatusList(updatedStatusList);
   };
 
-  const handleInvoiceInputChange = (index, value) => {
-    const updatedInvoiceInputList = [...invoiceInputList];
-    updatedInvoiceInputList[index] = value;
-    setInvoiceInputList(updatedInvoiceInputList);
-  };
+  // const handleInvoiceInputChange = (index, value) => {
+  //   const updatedInvoiceInputList = [...invoiceInputList];
+  //   updatedInvoiceInputList[index] = value;
+  //   setInvoiceInputList(updatedInvoiceInputList);
+  // };
 
   const filterChange = (e) => {
     setFilter(e)

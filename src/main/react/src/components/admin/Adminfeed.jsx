@@ -11,8 +11,7 @@ const Adminfeed = () => {
   const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
   const [totalPage, setTotalPage] = useState(0); // 총 페이지 수
   const [isTrue, setIsTrue] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("all"); // 분류
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("ALL");
   // 모달관련
   const [modalOpen, setModalOpen] = useState(false);
   const [type, setType] = useState();
@@ -47,9 +46,6 @@ const Adminfeed = () => {
   // 리렌더링 용
   const reRender = () => {
     setIsTrue((prev) => !prev);
-  };
-  const HandleCategoryChange = (category) => {
-    setSelectedCategory(category);
   };
 
   // 페이지 - DATA불러오기
@@ -118,21 +114,8 @@ const Adminfeed = () => {
     feedDel();
   };
 
-  const selectedData = () => {
-    switch (selectedCategory) {
-      case "all":
-        return feedList;
-      case "CAT":
-        return feedList.filter((item) => item.feedType === "CAT");
-      case "DOG":
-        return feedList.filter((item) => item.feedType === "DOG");
-      default:
-        return feedList;
-    }
-  };
-
   const filterChange = (e) => {
-    setFilter(e)
+    setFilter(e);
     setCurrentPage(0);
   }
 
@@ -143,33 +126,30 @@ const Adminfeed = () => {
           <h1>사료 관리</h1>
           <div className="selectBox boxFlex">
             <div className="labelBox">
-              <label htmlFor="all">
+              <label>
                 <input
-                  id="all"
                   type="radio"
                   value="all"
-                  checked={filter === "all"}
-                  onChange={() => filterChange("all")}
+                  checked={filter === "ALL"}
+                  onChange={() => filterChange("ALL")}
                 />
                 전체
               </label>
-              <label htmlFor="CAT">
+              <label>
                 <input
-                  id="CAT"
                   type="radio"
                   value="CAT"
-                  checked={filter === "고양이"}
-                  onChange={() => filterChange("고양이")}
+                  checked={filter === "CAT"}
+                  onChange={() => filterChange("CAT")}
                 />
                 고양이
               </label>
-              <label htmlFor="DOG">
+              <label>
                 <input
-                  id="DOG"
                   type="radio"
                   value="DOG"
-                  checked={filter === "강아지"}
-                  onChange={() => filterChange("강아지")}
+                  checked={filter === "DOG"}
+                  onChange={() => filterChange("DOG")}
                 />
                 강아지
               </label>
@@ -199,7 +179,7 @@ const Adminfeed = () => {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>
-                      <img src={feed.feedImg} width={100} alt="사료 이미지" />
+                      <img src={feed.feedImg} height={100} alt="사료 이미지" />
                     </td>
                     <td>{feed.feedType}</td>
                     <td>{feed.feedName}</td>

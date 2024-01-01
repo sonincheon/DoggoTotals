@@ -52,8 +52,15 @@ public class AdminBoardService {
         if ("all".equals(filter) || filter == null || filter.isEmpty()) {
             boardPage = boardRepository.findAll(pageable);
         } else {
-            boardPage = boardRepository.findByAnswerContaining(filter, pageable);
+            if ("answered".equals(filter)) {
+                boardPage = boardRepository.findByAnswerIsNotNull(pageable);
+            } else if ("unanswered".equals(filter)) {
+                boardPage = boardRepository.findByAnswerIsNull(pageable);
+            } else {
+                boardPage = boardRepository.findByAnswerContaining(filter, pageable);
+            }
         }
+
         List<Board> boards = boardPage.getContent();
         List<BoardDto> boardDtos = new ArrayList<>();
         for (Board board : boards) {
@@ -68,7 +75,13 @@ public class AdminBoardService {
         if ("all".equals(filter) || filter == null || filter.isEmpty()) {
             boardPage = boardRepository.findAll(pageable);
         } else {
-            boardPage = boardRepository.findByAnswerContaining(filter, pageable);
+            if ("answered".equals(filter)) {
+                boardPage = boardRepository.findByAnswerIsNotNull(pageable);
+            } else if ("unanswered".equals(filter)) {
+                boardPage = boardRepository.findByAnswerIsNull(pageable);
+            } else {
+                boardPage = boardRepository.findByAnswerContaining(filter, pageable);
+            }
         }
 
         return boardPage.getTotalPages();

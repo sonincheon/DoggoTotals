@@ -18,7 +18,14 @@ import AdminAxiosApi from "../../api/AdminAxios";
 export const ChartSize = styled.div`
   width: 100%;
   height: 400px;
+  .recharts-legend-wrapper {
+    .recharts-default-legend {
+      text-align: right !important; 
+    }
+  }
 `;
+
+
 
 const Adminmain = () => {
   // axios로 날짜, 판매수, 가격 가져오기
@@ -99,5 +106,7 @@ const Adminmain = () => {
     </>
   );
 };
+
+
 
 export default Adminmain;

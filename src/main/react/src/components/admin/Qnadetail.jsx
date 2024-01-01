@@ -89,7 +89,6 @@ const Qnadetail = () => {
   const [detailQna, setDetailQna] = useState([]);
   const [answer, setAnswer] = useState("");
   const [isTrue, setIsTrue] = useState(false);
-  const [uploadedAnswer, setUploadedAnswer] = useState(answer);
 
   const Click = () => {
     setIsTrue((prev) => !prev);

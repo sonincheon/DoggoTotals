@@ -80,7 +80,7 @@ const Menus = styled.div`
 
 const Admin = () => {
   const navigate = useNavigate();
-  const [ activeMenu, setActiveMenu ] = useState(null);
+  const [ activeMenu, setActiveMenu ] = useState('');
 
   function handleClick(menu) {
     navigate(`/admin/${menu}`);

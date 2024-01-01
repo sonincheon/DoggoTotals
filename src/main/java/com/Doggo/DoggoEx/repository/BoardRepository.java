@@ -10,4 +10,6 @@ import java.util.List;
 public interface BoardRepository extends JpaRepository<Board, Long> {
     List<Board> findByMemberMemberEmail(String memberEmail);
     Page<Board> findByAnswerContaining(String filter, Pageable pageable);
+    Page<Board> findByAnswerIsNotNull(Pageable pageable);
+    Page<Board> findByAnswerIsNull(Pageable pageable);
 }

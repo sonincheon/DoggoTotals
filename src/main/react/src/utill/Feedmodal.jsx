@@ -85,6 +85,7 @@ const ModalStyle = styled.div`
     .imgBox {
       width: 70%;
       min-width: 250px;
+      max-width: 400px;
       margin: 0 auto;
       padding: 20px;
 
@@ -281,8 +282,8 @@ const Feedmodal = (props) => {
       inputFeedPrice,
       inputFeedInfo
     );
-    try {
-      const res = await AxiosApi.FeedReg(
+    try { 
+      const res = await AxiosApi.FeedReg( // 순서 바꾸면 400에러남
         url,
         inputFeedInfo,
         inputFeedName,
@@ -339,7 +340,8 @@ const Feedmodal = (props) => {
   };
 
   useEffect(() => {
-    console.log(feedType);
+    console.log("사료이름 : " + feedName);
+    console.log("사료정보 : " + feedInfo);
     if (open) {
       setInputFeedType(feedType || "");
       setInputFeedName(feedName || "");

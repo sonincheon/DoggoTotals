@@ -42,29 +42,11 @@ const QnaBoard = styled.div`
 const Adminqna = () => {
   const navigate = useNavigate();
 
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [qnaAllList, setQnaAllList] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
   const [totalPage, setTotalPage] = useState(0); // 총 페이지 수
+  const [filter, setFilter] = useState("all");
 
-  const selectedData = () => {
-    switch (selectedCategory) {
-      case "all":
-        return qnaAllList.sort(
-          (a, b) => new Date(a.regDate) - new Date(b.regDate)
-        );
-      case "recent":
-        return qnaAllList.sort(
-          (a, b) => new Date(b.regDate) - new Date(a.regDate)
-        );
-      case "unanswered":
-        return qnaAllList.filter((item) => !item.answer);
-      case "answered":
-        return qnaAllList.filter((item) => item.answer);
-      default:
-        return qnaAllList;
-    }
-  };
 
   const handleQnaDetail = (id) => {
     navigate(`/admin/qna/${id}`);
@@ -88,19 +70,19 @@ const Adminqna = () => {
   useEffect(() => {
     const totalPage = async () => {
       try {
-        const res = await AdminAxiosApi.QnaPage(0, 10);
+        const res = await AdminAxiosApi.QnaPage(0, 10, filter);
         setTotalPage(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     totalPage();
-  }, []);
+  }, [filter]);
 
   useEffect(() => {
     const qnaList = async () => {
       try {
-        const res = await AdminAxiosApi.QnaPageList(currentPage, 10);
+        const res = await AdminAxiosApi.QnaPageList(currentPage, 10, filter);
         console.log(res.data);
         setQnaAllList(res.data);
       } catch (error) {
@@ -108,7 +90,7 @@ const Adminqna = () => {
       }
     };
     qnaList();
-  }, [currentPage]);
+  }, [currentPage, filter]);
 
   // 페이지네이션 - 페이지 이동 기능
   const handlePageChange = (number) => {
@@ -128,6 +110,10 @@ const Adminqna = () => {
       </PaginationContainer>
     );
   };
+  const filterChange = (e) => {
+    setFilter(e)
+    setCurrentPage(0);
+  }
 
   return (
     <>
@@ -139,26 +125,17 @@ const Adminqna = () => {
               <input
                 type="radio"
                 value="all"
-                checked={selectedCategory === "all"}
-                onChange={() => setSelectedCategory("all")}
+                checked={filter === "all"}
+                onChange={() => filterChange("all")}
               />
               전체문의
             </label>
             <label>
               <input
                 type="radio"
-                value="recent"
-                checked={selectedCategory === "recent"}
-                onChange={() => setSelectedCategory("recent")}
-              />
-              최근순
-            </label>
-            <label>
-              <input
-                type="radio"
                 value="unanswered"
-                checked={selectedCategory === "unanswered"}
-                onChange={() => setSelectedCategory("unanswered")}
+                checked={filter === "unanswered"}
+                onChange={() => filterChange("unanswered")}
               />
               답변 대기
             </label>
@@ -166,18 +143,17 @@ const Adminqna = () => {
               <input
                 type="radio"
                 value="answered"
-                checked={selectedCategory === "answered"}
-                onChange={() => setSelectedCategory("answered")}
+                checked={filter === "answered"}
+                onChange={() => filterChange("answered")}
               />
               답변 완료
             </label>
           </div>
 
           <QnaBoard>
-            {selectedData().map((item, index) => (
+            {qnaAllList.map((item, index) => (
               <div key={index} className="flexbox">
                 <span>{index + 1}</span>
-                {/* <img src={item.Img} alt="프로필 이미지" /> */}
                 <div className="textbox">
                   <p onClick={() => handleQnaDetail(item.boardId)}>
                     [{item.boardType}] <span className="bar"></span>
@@ -188,7 +164,7 @@ const Adminqna = () => {
                     <span className="bar"></span>
                     <span>{formatDate(item.regDate)}</span>
                     <span className="bar"></span>
-                    <span>{item.answer ? "답변완료" : "답변대기"}</span>
+                    <span>{item.answer ? "답변 완료" : "답변 대기"}</span>
                   </div>
                 </div>
               </div>

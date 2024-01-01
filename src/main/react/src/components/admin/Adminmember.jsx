@@ -192,17 +192,13 @@ const Adminmember = () => {
   const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
   const [totalPage, setTotalPage] = useState(0); // 총 페이지 수
   const [isTrue, setIsTrue] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [filter, setFilter] = useState("all");
 
   // 리렌더링 용
   const reRender = () => {
     setIsTrue((prev) => !prev);
   };
-  // 분류 버튼
-  const HandleCategoryChange = (category) => {
-    setSelectedCategory(category);
-  };
+
   // 날짜 포멧
   const formatDate = (dateString) => {
     const options = {
@@ -264,19 +260,6 @@ const Adminmember = () => {
     );
   };
 
-  // 필터
-  // const selectedData = () => {
-  //   switch (selectedCategory) {
-  //     case "all":
-  //       return memberList;
-  //     case "paid":
-  //       return memberList.filter((item) => item.memberGrade === "paid");
-  //     case "free":
-  //       return memberList.filter((item) => item.memberGrade === "free");
-  //     default:
-  //       return memberList;
-  //   }
-  // };
 
   // 회원삭제
   const HandleDeleteMember = async (email) => {
@@ -310,7 +293,7 @@ const Adminmember = () => {
               <input
                 type="radio"
                 value="all"
-                checked={selectedCategory === "all"}
+                checked={filter === "all"}
                 onChange={() => filterChange("all")}
               />
               전체
@@ -318,18 +301,27 @@ const Adminmember = () => {
             <label>
               <input
                 type="radio"
-                value="paid"
-                checked={selectedCategory === "구독중"}
-                onChange={() => filterChange("구독중")}
+                value="PREMIUM"
+                checked={filter === "PREMIUM"}
+                onChange={() => filterChange("PREMIUM")}
               />
-              구독 회원
+              PREMIUM
             </label>
             <label>
               <input
                 type="radio"
-                value="free"
-                checked={selectedCategory === "미구독"}
-                onChange={() => filterChange("미구독")}
+                value="STANDARD"
+                checked={filter === "STANDARD"}
+                onChange={() => filterChange("STANDARD")}
+              />
+              STANDARD
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="FREE"
+                checked={filter === "FREE"}
+                onChange={() => filterChange("FREE")}
               />
               미구독 회원
             </label>
@@ -359,7 +351,8 @@ const Adminmember = () => {
                     <td>{member.memberTel}</td>
                     <td>{formatDate(member.regDate)}</td>
                     <td>
-                      {member.memberGrade === "paid" ? "구독중" : "미구독"}
+                      {/*{member.memberGrade === "paid" ? "구독중" : "미구독"} */}
+                      {member.memberGrade === null ? "미구독" : member.memberGrade}
                     </td>
                     <td>
                       <button

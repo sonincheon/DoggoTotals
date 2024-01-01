@@ -1,5 +1,5 @@
 package com.Doggo.DoggoEx.enums;
 
 public enum FeedType {
-    DOG,CAT
+    DOG,CAT,ALL
 }
