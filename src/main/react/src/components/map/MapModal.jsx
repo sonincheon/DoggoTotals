@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import * as S from "./KakaoMap.style";
 
 const MapModal = ({
@@ -11,6 +11,16 @@ const MapModal = ({
   currentPage,
   setCurrentPage,
 }) => {
+  const selectedItemRef = useRef(null);
+
+  useEffect(() => {
+    if (selectedItemRef.current) {
+      selectedItemRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [openMarkerId]);
   return (
     <S.ModalContainer isClosed={!isModalOpen}>
       <S.List>
@@ -18,6 +28,7 @@ const MapModal = ({
         {search.map((data) => (
           <S.Item
             key={data.id}
+            ref={data.id === openMarkerId ? selectedItemRef : null}
             onClick={() => {
               setOpenMarkerId(data.id);
               moveLatLng(data);

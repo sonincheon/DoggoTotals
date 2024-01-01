@@ -5,7 +5,8 @@ import * as S from "./KakaoMap.style";
 import leftAngle from "../../icon/angle-small-left.svg";
 import rightAngle from "../../icon/angle-small-right.svg";
 import MapModal from "./MapModal";
-
+import dog from "../../icon/dog-pawprint-on-a-heart-svgrepo-com.svg";
+// import dog from "../../icon/dog-pawprints-svgrepo-com.svg";
 const { kakao } = window;
 
 const KEYWORD_LIST = [
@@ -29,7 +30,7 @@ const KakaoMap = () => {
   });
 
   // 검색에 사용될 키워드를 관리하는 상태 변수
-  const [keyword, setKeyword] = useState("애견카페");
+  const [keyword, setKeyword] = useState("");
   // 검색 결과를 담는 상태 변수
   const [search, setSearch] = useState([]);
   // 검색 결과의 페이지네이션 정보를 관리하는 상태 변수
@@ -79,6 +80,7 @@ const KakaoMap = () => {
       }));
     }
   }, []);
+
   // 검색된 장소 표시하기
   const displayPlaces = (data) => {
     const bounds = new kakao.maps.LatLngBounds();
@@ -121,7 +123,6 @@ const KakaoMap = () => {
 
           // 조정된 지도 영역을 설정하며 줌 레벨을 변경하지 않음
           map.setBounds(bounds);
-
           setPagination(pagination);
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
           setIsSidebarOpen(true); // 사이드바
@@ -169,6 +170,7 @@ const KakaoMap = () => {
   const goBack = () => {
     const newLatLng = new kakao.maps.LatLng(state.center.lat, state.center.lng);
     map.panTo(newLatLng);
+    setLastCenter(state.center);
   };
 
   const handleMouseEnter = () => {
@@ -203,7 +205,7 @@ const KakaoMap = () => {
   // 재검색 후, 키워드를 선택할 때마다 검색하기
   const handleKeywordSelect = (selectedKeyword) => {
     setKeyword(selectedKeyword);
-
+    setIsSidebarOpen(true);
     if (lastCenter) {
       // 이미 이동한 지도의 중심 좌표가 있으면 해당 위치를 기반으로 검색
       searchPlaces(lastCenter, 1);
@@ -334,9 +336,9 @@ const KakaoMap = () => {
         {/* 모바일 화면일 경우 검색 결과 모달로 표시 */}
         {isMobile && (
           <S.MapModal>
-            <S.ModalBtn
-              onClick={() => setIsModalOpen((prev) => !prev)}
-            ></S.ModalBtn>
+            <S.ModalBtn onClick={() => setIsModalOpen((prev) => !prev)}>
+              <img src={dog} alt="" />
+            </S.ModalBtn>
             <MapModal
               search={search}
               openMarkerId={openMarkerId}

@@ -74,13 +74,13 @@ const Box4 = styled.div`
   }
 `;
 const Button = styled.button`
-  color: white;
-  background-color: #333333;
+  color: ${({ selected }) => (selected ? "#f95001" : "white")};
+  background-color: ${({ selected }) => (selected ? "white" : "#333333")};
   border-radius: 5px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   padding: 10px;
   cursor: pointer;
-
+  border: 1px solid;
   &:hover {
     background-color: white;
     color: #f95001;
@@ -94,7 +94,7 @@ const Button = styled.button`
 const FileUploadContainer = styled.div`
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 const StyledInput = styled.input`
@@ -183,8 +183,6 @@ const ServiceWrite = () => {
       // 다운로드 URL을 가져오고 기다립니다.
       const url = await fileRef.getDownloadURL();
       console.log("저장경로 확인 : " + url);
-
-      // 상태를 업데이트합니다.
       setUrl(url);
       setBoardImg(url);
     } catch (error) {
@@ -200,7 +198,6 @@ const ServiceWrite = () => {
       const rsp = await ServiceApi.boardPlus(boardType, comment, boardImg);
       if (rsp.data === true) {
         console.log(rsp.data);
-        setUrl("");
         navigate(-1);
       } else {
       }
@@ -222,17 +219,43 @@ const ServiceWrite = () => {
           <h2>문의 유형</h2>
         </div>
         <Box2>
-          <div
-            className="container-button"
-            value={boardType}
-            onClick={handleButtonClick}
-          >
-            <Button>배송</Button>
-            <Button>주문/결제</Button>
-            <Button>취소/교환/환불</Button>
-            <Button>회원정보</Button>
-            <Button>사료문의</Button>
-            <Button>이용문의</Button>
+          <div className="container-button">
+            <Button
+              selected={buttonText === "배송"}
+              onClick={handleButtonClick}
+            >
+              배송
+            </Button>
+            <Button
+              selected={buttonText === "주문/결제"}
+              onClick={handleButtonClick}
+            >
+              주문/결제
+            </Button>
+            <Button
+              selected={buttonText === "취소/교환/환불"}
+              onClick={handleButtonClick}
+            >
+              취소/교환/환불
+            </Button>
+            <Button
+              selected={buttonText === "회원정보"}
+              onClick={handleButtonClick}
+            >
+              회원정보
+            </Button>
+            <Button
+              selected={buttonText === "사료문의"}
+              onClick={handleButtonClick}
+            >
+              사료문의
+            </Button>
+            <Button
+              selected={buttonText === "이용문의"}
+              onClick={handleButtonClick}
+            >
+              이용문의
+            </Button>
           </div>
         </Box2>
       </Box>

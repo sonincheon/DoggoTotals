@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { storage } from "./FireBase";
 import ServiceApi from "../api/ServiceApi";
@@ -78,11 +78,10 @@ const ModalStyle = styled.div`
 `;
 const Box = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   padding: 10px;
   .mini {
-    font-size: 20px;
+    font-size: 1.2rem;
     h2 {
       width: 150px;
       font-size: 1.5rem;
@@ -91,8 +90,8 @@ const Box = styled.div`
   .container-button {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    row-gap: 10px;
-    column-gap: 10px;
+    row-gap: 5px;
+    column-gap: 5px;
     justify-content: center;
   }
 `;
@@ -101,29 +100,27 @@ const Box2 = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  width: 100%;
+  padding: 10px;
 `;
 const Box3 = styled.div`
   display: flex;
   justify-content: flex-end;
   column-gap: 5px;
   padding: 10px;
+
   button {
-    color: white;
-    background-color: #333333;
-    border-radius: 5px;
-    border: none;
-    font-size: 1rem;
     width: 100px;
   }
 `;
 const Button = styled.button`
-  color: white;
-  background-color: #333333;
+  color: ${({ selected }) => (selected ? "#f95001" : "white")};
+  background-color: ${({ selected }) => (selected ? "white" : "#333333")};
   border-radius: 5px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   padding: 10px;
   cursor: pointer;
-
+  border: 1px solid;
   &:hover {
     background-color: white;
     color: #f95001;
@@ -145,14 +142,15 @@ const StyledInput = styled.input`
 `;
 
 const UploadButton = styled.button`
-  border: 1px solid #f95001;
+  padding: 10px;
   width: 100px;
-  padding: 5px;
   border-radius: 5px;
   color: #333333;
   background: white;
+  border: 1px solid #f95001;
   &:hover {
     color: #f95001;
+    border: 1px solid #f95001;
   }
 `;
 const UserImage = styled.img`
@@ -163,8 +161,8 @@ const Servicemodal = (props) => {
   const { open, close, id } = props;
   const [buttonText, setButtonText] = useState("");
   const [boardImg, setBoardImg] = useState("");
-  const [url, setUrl] = useState("");
   const [file, setFile] = useState(null);
+  const [url, setUrl] = useState("");
   const [boardType, setBoardType] = useState(""); // 문의 유형 선택값 저장
   const [comment, setComment] = useState(""); // textarea 내용 저장
   const maxLength = 100;
@@ -245,7 +243,6 @@ const Servicemodal = (props) => {
       if (rsp.data === true) {
         setUrl("");
         navigate("/service");
-
         close();
       } else {
         console.log(rsp);
@@ -266,17 +263,43 @@ const Servicemodal = (props) => {
                 <h2>문의 유형</h2>
               </div>
               <Box2>
-                <div
-                  className="container-button"
-                  value={boardType}
-                  onClick={handleButtonClick}
-                >
-                  <Button>배송</Button>
-                  <Button>주문/결제</Button>
-                  <Button>취소/교환/환불</Button>
-                  <Button>회원정보</Button>
-                  <Button>사료문의</Button>
-                  <Button>이용문의</Button>
+                <div className="container-button">
+                  <Button
+                    selected={buttonText === "배송"}
+                    onClick={handleButtonClick}
+                  >
+                    배송
+                  </Button>
+                  <Button
+                    selected={buttonText === "주문/결제"}
+                    onClick={handleButtonClick}
+                  >
+                    주문/결제
+                  </Button>
+                  <Button
+                    selected={buttonText === "취소/교환/환불"}
+                    onClick={handleButtonClick}
+                  >
+                    취소/교환/환불
+                  </Button>
+                  <Button
+                    selected={buttonText === "회원정보"}
+                    onClick={handleButtonClick}
+                  >
+                    회원정보
+                  </Button>
+                  <Button
+                    selected={buttonText === "사료문의"}
+                    onClick={handleButtonClick}
+                  >
+                    사료문의
+                  </Button>
+                  <Button
+                    selected={buttonText === "이용문의"}
+                    onClick={handleButtonClick}
+                  >
+                    이용문의
+                  </Button>
                 </div>
               </Box2>
             </Box>
@@ -295,6 +318,7 @@ const Servicemodal = (props) => {
                   value={comment}
                   maxLength={maxLength}
                 ></textarea>
+
                 <p>
                   {comment.length}/{maxLength}
                 </p>

@@ -57,6 +57,10 @@ const Box = styled.div`
       word-break: break-all;
       flex-direction: column;
     }
+    .question_img {
+      display: flex;
+      padding: 10px;
+    }
     .question_date {
       display: flex;
       font-size: 1rem;
@@ -79,9 +83,8 @@ const Box = styled.div`
 `;
 const Box2 = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
-
   margin-top: 5px;
   @media (max-width: 768px) {
     order: 1; /* 화면 작아졌을 때 왼쪽으로 이동 */
@@ -117,11 +120,11 @@ const Button = styled.button`
   color: white;
   background-color: #333333;
   border-radius: 5px;
-  font-size: 1rem;
-  padding: 5px;
-  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 10px;
   width: 100px;
-
+  cursor: pointer;
+  border: 1px solid;
   &:hover {
     background-color: white;
     color: #f95001;
@@ -246,16 +249,18 @@ const Service = () => {
       <div className="item">
         <div className="question" onClick={toggleAnswer}>
           <div className="question_item">{question}</div>
-          {image && (
-            <img
-              src={image}
-              alt="이미지"
-              style={{
-                width: "100px",
-                height: "100px",
-              }}
-            />
-          )}
+          <div className="question_img">
+            {image && (
+              <img
+                src={image}
+                alt="이미지"
+                style={{
+                  width: "100px",
+                  height: "100px",
+                }}
+              />
+            )}
+          </div>
           <div className="question_date">{formattedDate}</div>
         </div>
         {showAnswer && answer ? (
@@ -308,7 +313,10 @@ const Service = () => {
         <Base>
           <Container>
             <div className="title">
-              <h1>1:1 문의</h1>
+              <Box2>
+                <h1>1:1 문의</h1>
+                <Button onClick={() => navigate("/serviceVeiw")}>작성</Button>
+              </Box2>
               <hr />
             </div>
             <Box>
@@ -325,9 +333,6 @@ const Service = () => {
                     regDate={list.regDate}
                   />
                 ))}
-              <Box2>
-                <Button onClick={() => navigate("/serviceVeiw")}>작성</Button>
-              </Box2>
             </Box>
           </Container>
           <Container>
