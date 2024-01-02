@@ -7,7 +7,7 @@ const OutScreen =styled.div`
   width: 100vw;
   height: 100vh;
   position: absolute;
-  background-color: white
+  background-color: white;
   z-index: 10000;
   top: 0;
   left: 0;
@@ -37,7 +37,7 @@ const PrivateLayout = () => {
             console.log("재발급시작!!!");
             const res = await Common.handleUnauthorized();
             if (res === false) {
-              alert("로그인을해주세요");
+              alert("로그인이필요한 서비스입니다.");
               navigate("/login");
             }
             const newToken = Common.getAccessToken();
@@ -48,7 +48,7 @@ const PrivateLayout = () => {
                 console.log("환영합니다^^ 로그인중입니다!");
                 setOnScreen(false);
               } else {
-                alert("로그인 해주세요!");
+                alert("로그인이필요한 서비스입니다.");
                 navigate("/login");
               }
             }
