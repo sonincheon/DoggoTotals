@@ -42,7 +42,8 @@ const AdminAxiosApi = {
   },
 
   InvoiceInput: async (id, orderStatus, invoice) => {
-    console.log("id : " + id, "판매상태 : " + orderStatus);
+    console.log("id : " + id, "판매상태 : " + orderStatus + "배송번호 : " + invoice);
+
     const InvoiceData = {
       id: id,
       orderStatus: orderStatus, 
@@ -129,6 +130,17 @@ const AdminAxiosApi = {
       MUNG_HOST + `/admin/feed/list/page?filter=${filter}&page=${page}&size=${size}`
     );
   },
+  // -------------------------------- Admin Feed
+  // 견종 조회
+  InsertDog: async () => {
+    return await axios.post(
+      MUNG_HOST + `/api/dogs/insert`)
+  },
+  // 묘종 조회
+  InsertCat: async () => {
+    return await axios.post(
+      MUNG_HOST + `/api/cats/insert`)
+  }
 }
 
 

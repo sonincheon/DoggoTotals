@@ -1,6 +1,7 @@
 package com.Doggo.DoggoEx.repository;
 
 
+import com.Doggo.DoggoEx.entity.Member;
 import com.Doggo.DoggoEx.entity.Sale;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

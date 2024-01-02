@@ -1,6 +1,5 @@
 package com.Doggo.DoggoEx.repository;
 
-import com.Doggo.DoggoEx.entity.Board;
 import com.Doggo.DoggoEx.entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +19,5 @@ public interface MemberRepository extends JpaRepository <Member, Long> {
     Optional<Member> findByMemberEmailAndMemberPassword(String email, String password);
 
     Page<Member> findByMemberGradeContaining(String filter, Pageable pageable);
-    Page<Member> findByMemberGradeIsNotNull(Pageable pageable);
     Page<Member> findByMemberGradeIsNull(Pageable pageable);
 }

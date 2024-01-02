@@ -115,6 +115,10 @@ const Admin = () => {
             <p>사료 관리</p>
           </Menus>
           <hr />
+          <Menus className={activeMenu === 'animal' ? 'active' : ''} onClick={() => handleClick("animal")}>
+            <p>견종, 묘종 백과</p>
+          </Menus>
+          <hr />
         </SideBar>
       </AdminContainer>
 

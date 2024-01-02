@@ -168,7 +168,6 @@ const Adminfeed = () => {
                   <th>Type</th>
                   <th>Name</th>
                   <th>Price</th>
-                  <th>Subscribe</th>
                   <th>Info</th>
                   <th>Change</th>
                   <th>Delete</th>
@@ -184,7 +183,6 @@ const Adminfeed = () => {
                     <td>{feed.feedType}</td>
                     <td>{feed.feedName}</td>
                     <td>{feed.feedPrice}</td>
-                    <td>{feed.feedSubscribe}</td>
                     <td>{feed.feedInfo}</td>
                     <td>
                       <button
@@ -196,7 +194,6 @@ const Adminfeed = () => {
                             feed.feedType,
                             feed.feedName,
                             feed.feedPrice,
-                            feed.feedSubscribe,
                             feed.feedInfo
                           )
                         }

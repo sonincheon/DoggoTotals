@@ -53,7 +53,6 @@ public class AdminMemberService {
             memberPage = memberRepository.findAll(pageable);
         } else {
             // 특정 필터 조건에 맞는 데이터를 가져옴 (부분 일치 검색)
-//            memberPage = memberRepository.findByMemberGradeContaining(filter, pageable);
             if ("FREE".equals(filter)) {
                 memberPage = memberRepository.findByMemberGradeIsNull(pageable);
             } else {
@@ -74,7 +73,6 @@ public class AdminMemberService {
         if ("all".equals(filter) || filter == null || filter.isEmpty()) {
             memberPage = memberRepository.findAll(pageable);
         } else {
-//            memberPage = memberRepository.findByMemberGradeContaining(filter, pageable);
             if ("FREE".equals(filter)) {
                 memberPage = memberRepository.findByMemberGradeIsNull(pageable);
             } else {

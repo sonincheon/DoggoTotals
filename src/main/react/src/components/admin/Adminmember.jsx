@@ -37,6 +37,16 @@ export const RightBox = styled.div`
       margin-right: 3%;
     }
 
+    & > .loadingBtn {
+      margin-right: 10px;
+      transition: all 0.3s;
+    }
+    & > .loadingBtn:hover {
+      background-color: #F95001;
+      color: #fff;
+      border-color: #F95001;
+    }
+
     // 라디오 버튼 css
     input[type="radio"] {
       -webkit-appearance: none; // 웹킷 브라우저에서 기본 스타일 제거
@@ -72,6 +82,12 @@ export const RightBox = styled.div`
       cursor: pointer;
     }
   }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   // QnA에서 사용
   .flexbox {
     display: flex;
@@ -143,6 +159,22 @@ export const RightBox = styled.div`
         height: 40px;
         padding: 10px 20px;
         vertical-align: middle;
+
+        select {
+          -moz-appearance: none;
+          -webkit-appearance: none;
+          appearance: none;
+
+          color: #444;
+          background-color: #fff;
+
+          padding: 10px 15px;
+          margin: 0;
+
+          border: 1px solid #aaa;
+          border-radius: 5px;
+          box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+        }
       }
       input {
         display: inline-block;
@@ -192,6 +224,7 @@ const Adminmember = () => {
   const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
   const [totalPage, setTotalPage] = useState(0); // 총 페이지 수
   const [isTrue, setIsTrue] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [filter, setFilter] = useState("all");
 
   // 리렌더링 용
@@ -319,6 +352,15 @@ const Adminmember = () => {
             <label>
               <input
                 type="radio"
+                value="ONE MONTH FREE"
+                checked={filter === "ONE MONTH FREE"}
+                onChange={() => filterChange("ONE MONTH FREE")}
+              />
+              ONE MONTH FREE
+            </label>
+            <label>
+              <input
+                type="radio"
                 value="FREE"
                 checked={filter === "FREE"}
                 onChange={() => filterChange("FREE")}
@@ -351,7 +393,7 @@ const Adminmember = () => {
                     <td>{member.memberTel}</td>
                     <td>{formatDate(member.regDate)}</td>
                     <td>
-                      {/*{member.memberGrade === "paid" ? "구독중" : "미구독"} */}
+                      {/* {member.memberGrade === "paid" ? "구독중" : "미구독"} */}
                       {member.memberGrade === null ? "미구독" : member.memberGrade}
                     </td>
                     <td>

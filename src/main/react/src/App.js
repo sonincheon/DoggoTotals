@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Header from "./pages/Header";
+import AboutPage from "./pages/AboutPage";
 import BookPage from "./pages/BookPage";
 import Diymain from "./pages/diyPage/Diymain";
 import Mapmain from "./pages/mapPage/Mapmain";
@@ -10,7 +11,6 @@ import ServiceMain from "./pages/servicePage/Servicemain";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import * as React from "react";
-import { useState, useCallback } from "react";
 import Signup from "./pages/userPage/SignUp";
 import Quicksell from "./pages/quickPage/Quicksell";
 import Quicksucess from "./pages/quickPage/Quicksucess";
@@ -31,6 +31,11 @@ import ServiceView from "./pages/servicePage/ServiceView";
 import FindIdPwd from "./pages/userPage/FindIdPwd";
 import PrivateLayout from "./pages/PrivateLayout";
 import Auth from "./pages/userPage/Auth";
+import { LoadingProvider } from "./context/LoadingContext";
+import Loader from "./utill/Loader";
+import PrivateLayoutAdmin from "./pages/PrivateLayoutAdmin";
+import Adminanimal from "./components/admin/Adminanimal";
+
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -45,12 +50,17 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
+  // 로딩상태 관리
+
+
   return (
     <>
       {/* 결제용 context  */}
       <PayStore>
         <GlobalStyle />
+        <LoadingProvider>
         <Router>
+        {/* <Loader/> */}
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -75,6 +85,7 @@ function App() {
                 <Route path="/serviceVeiw" element={<ServiceView />} />
               </Route>
               <Route path="/" element={<HomePage />} />
+              <Route path="about" element={<AboutPage />} />
               <Route path="/book" element={<BookPage />} />
               <Route path="/diy" element={<Diymain />} />
               <Route path="/map" element={<Mapmain />} />
@@ -83,16 +94,22 @@ function App() {
             </Route>
 
             {/* 여긴 어드민 구간  */}
-            <Route element={<Admin />}>
-              <Route path="/admin" element={<Adminmainpage />} />
-              <Route path="/admin/member" element={<Adminmemberpage />} />
-              <Route path="/admin/sales" element={<Adminsalespage />} />
-              <Route path="/admin/qna" element={<Adminqnapage />} />
-              <Route path="/admin/qna/:id" element={<Qnadetailpage />} />
-              <Route path="/admin/feed" element={<Adminfeedpage />} />
+            <Route element={<PrivateLayoutAdmin />}>
+              <Route element={<Admin />}>
+                <Route path="/admin" element={<Adminmainpage />} />
+                <Route path="/admin/member" element={<Adminmemberpage />} />
+                <Route path="/admin/sales" element={<Adminsalespage />} />
+                <Route path="/admin/qna" element={<Adminqnapage />} />
+                <Route path="/admin/qna/:id" element={<Qnadetailpage />} />
+                <Route path="/admin/feed" element={<Adminfeedpage />} />
+                <Route path="/admin/animal" element={<Adminanimal />} />
+              </Route>
             </Route>
+            
           </Routes>
+          
         </Router>
+        </LoadingProvider>
       </PayStore>
     </>
   );
