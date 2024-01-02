@@ -44,8 +44,8 @@ const ModalStyle = styled.div`
 
   section > header button {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 5px;
+    right: 5px;
     width: 30px;
     font-size: 21px;
     font-weight: 700;
@@ -76,6 +76,7 @@ const ModalStyle = styled.div`
   }
   section > footer {
     text-align: right;
+    padding: 12px 16px;
   }
   section > footer button {
     padding: 6px 12px;

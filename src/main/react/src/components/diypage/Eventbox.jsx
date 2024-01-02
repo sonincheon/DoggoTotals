@@ -23,7 +23,9 @@ const Block = styled.div`
   box-shadow: 0 0 4px black;
   @media (max-width: 768px) {
     width: 90%;
+    height: 600px;
     position: fixed;
+    z-index: 3;
     display: ${(props) => (props.changeModal ? "flex" : "none")};
     padding-bottom: 5%;
   }
@@ -69,22 +71,19 @@ const Block = styled.div`
     align-items: center;
     justify-content: center;
   }
-  .slideox {
-    width: 250px;
-    height: 100px;
-  }
+
   .slidebox {
-    width: 90%;
+    width: 88%;
     height: 70%;
     display: block;
     .slick-next:before {
-      color: #3c3939;
+      color: #333333;
       font-size: 20px;
       display: flex;
       justify-content: end;
     }
     .slick-prev:before {
-      color: #3c3939;
+      color: #333333;
       font-size: 20px;
       display: flex;
     }
@@ -126,6 +125,17 @@ const CirclePlus = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const MobileBlock=styled.div`
+  @media (max-width: 768px) {
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  display: ${(props) => (props.changeModal ? "flex" : "none")};}
 `;
 
 const Eventbox = (props) => {
@@ -238,7 +248,7 @@ const Eventbox = (props) => {
     autoplaySpeed: 2000, // 자동 스크롤 시 다음으로 넘어가는데 걸리는 시간 (ms)
     infinite: false, // 무한
     dots: false, //
-    speed: 20,
+    speed: 500,
     slidesToShow: 3,
     slidesToScroll: 2,
     arrows: true,
@@ -316,6 +326,7 @@ const Eventbox = (props) => {
         day={day}
         quest={quest}
       />
+      <MobileBlock changeModal={changeModal}/>
     </>
   );
 };

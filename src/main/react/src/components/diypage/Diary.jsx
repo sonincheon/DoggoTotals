@@ -22,7 +22,7 @@ const Box =styled.div`
     justify-content: center;
     textarea{
       width: 90%;
-      height: 80%;
+      height: 75%;
       border: 2px solid #776B5D;
       border-radius: 5px;
       resize: none;
@@ -35,7 +35,7 @@ const BtnSt =styled.button`
   border: none;
   width: 100px;
   height: 40px;
-  margin-top: 5px;
+  margin: 10px 0;
   border-radius: 5px;
   background-color: #F95001;
   color: white;
@@ -49,6 +49,7 @@ const BtnSt =styled.button`
 const Diary = (props) => {
   const {day}=props;
   const [text,setText]=useState('');
+  const [buttonName,setButtonName]=useState("작성");
   const context = useContext(PayContext);
   const {isTrue,setIsTrue}=context;
   const navigate =useNavigate();
@@ -65,8 +66,10 @@ const Diary = (props) => {
         if (res.status === 200){
           console.log(res.data);
           setText(res.data.diaryDetail);
+          setButtonName("수정");
           }
     } catch (e) {
+        setButtonName("작성");
         console.error(e);
       }
     }
@@ -80,7 +83,7 @@ const Diary = (props) => {
         const resp = await AxiosApi.DiaryReg(day,text);
         if (resp.data === true) {
           console.log(resp.data);
-          alert("성공");
+          alert(`${buttonName}!`);
           setIsTrue((prev)=>!prev);
         }
       } catch (e) {
@@ -93,10 +96,10 @@ const Diary = (props) => {
 
   return (
     <Box>
-    <h1>멍냥일기</h1>
+    <h1>📕멍냥일기📕</h1>
         <div className="textbox">
-            <textarea placeholder="오늘 하루를 작성해주세요" value={text} onChange={textChange}/>
-            <BtnSt onClick={diaryReg}>작성</BtnSt>
+            <textarea  maxlength="2000" placeholder="오늘 하루를 작성해주세요" value={text} onChange={textChange}/>
+            <BtnSt onClick={diaryReg}>{buttonName}</BtnSt>
         </div>
     </Box>
 

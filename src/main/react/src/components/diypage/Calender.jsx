@@ -111,22 +111,22 @@ const StyledCalendar = styled(Calendar)`
   }
   .react-calendar__tile--active {
     border-bottom:5px solid #264fe5;
-    background-color:#f89f7679; /* 선택된 날짜 배경색 */
+    background-color:#f3eeea; /* 선택된 날짜 배경색 */
   }
   
 .react-calendar__tile--active:active,
 .react-calendar__tile:focus,
   .react-calendar__tile:hover {
-    background-color: #f89f7679;
+    background-color: #f3eeea;
   }
   .react-calendar__tile--now:active,
 .react-calendar__tile--now:hover {
   /* 오늘 날짜에 대한 호버 및 액티브 스타일 */
-  background-color: #f3eeea;
+  background-color: #f89f7679;
   
 }
 .react-calendar__tile--now {
-  background-color: #f3eeea;
+  background-color: #f89f7679;
   border-bottom: 5px solid #F95001;
   /* 오늘 날짜에 대한 스타일 */
 }
