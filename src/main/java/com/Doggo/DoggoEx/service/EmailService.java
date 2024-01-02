@@ -49,7 +49,7 @@ public class EmailService {
         msgg += "<br>";
         msgg += "<div style='display: flex; font-family: verdana; width: 1150px; height: 800px; background-image: url(\"https://firebasestorage.googleapis.com/v0/b/dogcat-42fca.appspot.com/o/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C.png?alt=media&token=2854e453-2d64-4e80-91a2-b46abc13c294\"); background-size: cover; position: relative; text-align: center; justify-content: center; '>";
         msgg += "<div style='display: flex; text-align: center; justify-content: center; align-items: center; flex-direction: column; '>";
-        msgg += "<h2 style=\"color: #3C3939;\">회원가입 인증 코드입니다.</h2>";
+        msgg += "<h2 style=\"color: #3C3939;\">PET MEMOIR 인증 코드입니다.</h2>";
         msgg += "<div style='font-size: 130%;'>";
         msgg += "인증 코드: <strong>";
         msgg += ePw + "</strong></div><br/>";

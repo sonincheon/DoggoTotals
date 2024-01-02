@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import AxiosApi from "../../api/Axios";
 import { ReactComponent as Logo } from "../../icon/petmemori.svg";
+import Modal from "../../utill/Modal";
 
 const Container = styled.div`
   width: 30vw;
@@ -14,7 +15,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-evenly;
   background-color: #ebebeb;
-  border-radius: 10px;
+  border-radius: 8px;
   margin-bottom: 3vh;
   padding: 8px;
 
@@ -72,14 +73,14 @@ const Item1 = styled.div`
 `;
 
 const Item2 = styled.input`
-  border-radius: 10px;
+  border-radius: 8px;
   width: 15vw;
   height: 4vh;
   min-width: 240px;
 `;
 
 const Item3 = styled.input`
-  border-radius: 10px;
+  border-radius: 8px;
   width: 15vw;
   height: 4vh;
   min-width: 200px;
@@ -88,7 +89,7 @@ const Item3 = styled.input`
 const Button1 = styled.button`
   width: 100%;
   height: 30px;
-  border-radius: 10px;
+  border-radius: 8px;
   background-color: #333333;
   color: white;
   cursor: pointer;
@@ -104,11 +105,14 @@ const Button1 = styled.button`
 const Button2 = styled.button`
   width: 5vw;
   height: 4vh;
-  border-radius: 10px;
+  border-radius: 8px;
   background-color: #333333;
   color: white;
   cursor: pointer;
   min-width: 70px;
+
+  opacity: ${(props) =>
+    props.disabled ? "0.7" : "1"}; // 비활성화 상태일 때 투명도 설정
 
   &:active {
     //확인 클릭하면 설정
@@ -123,8 +127,22 @@ const FindIdPwd = () => {
   const [inputTel, setInputTel] = useState("");
   const [foundId, setFoundId] = useState("");
   const [showFoundId, setShowFoundId] = useState(false);
+  const [inputId, setInputId] = useState("");
+  const [changePw, setChangePw] = useState("");
+
+  const [inputCert, setInputCert] = useState("");
+  const [sendEmail, setSendEmail] = useState("");
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalText, setModelText] = useState("중복된 아이디 입니다.");
+
+  const [able, setAble] = useState(true);
 
   const navigate = useNavigate();
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const onChangeName = (e) => {
     setInputName(e.target.value);
@@ -154,6 +172,75 @@ const FindIdPwd = () => {
     const hiddenPart = "*".repeat(Math.max(0, username.length - 3));
 
     return username.slice(0, 4) + hiddenPart + "@" + domain;
+  };
+
+  const SendEmail = async (email) => {
+    const response = await AxiosApi.EmailCert(email);
+    if (response.status === 200) {
+      setModelText("인증번호가 발송되었습니다. 이메일을 확인해주세요");
+      setModalOpen(true);
+      setSendEmail(response.data);
+    } else {
+      setModelText("이메일 전송에 실패했습니다.");
+    }
+  };
+
+  const SingupIdCheck = async (email) => {
+    const resp = await AxiosApi.SingupIdCheck(email);
+    console.log("가입 가능 여부 확인 : ", resp.data);
+    if (resp.data === false) {
+      const response = await AxiosApi.EmailCert(email);
+      if (response.status === 200) {
+        setModelText("인증번호가 발송되었습니다. 이메일을 확인해주세요");
+        setModalOpen(true);
+        setSendEmail(response.data);
+      } else {
+        setModelText("이메일 전송에 실패했습니다.");
+      }
+    } else {
+      setModelText("존재하지 않는 이메일입니다.");
+      setModalOpen(true);
+    }
+  };
+
+  const handleCertification = () => {
+    if (inputCert === sendEmail && inputCert !== "") {
+      // 인증번호가 일치할 때
+      setModelText("인증이 완료되었습니다.");
+      setAble(false);
+      setModalOpen(true);
+    } else {
+      // 인증번호가 일치하지 않을 때
+      setModelText("인증에 실패하였습니다.");
+      setModalOpen(true);
+      console.log(inputTel);
+    }
+  };
+
+  const changePwd = async (email, newPwd) => {
+    try {
+      const response = await AxiosApi.changePwd(email, newPwd);
+      console.log(email);
+      console.log(newPwd);
+      console.log(response);
+      if (response.data === true) {
+        setModelText("비밀번호가 성공적으로 변경되었습니다.");
+        setModalOpen(true);
+        navigate("/");
+      } else {
+        setModelText("비밀번호 변경에 실패했습니다.");
+        setModalOpen(true);
+        navigate("/");
+      }
+    } catch (error) {
+      setModelText("비밀번호 변경에 실패했습니다. 오류가 발생했습니다.");
+      setModalOpen(true);
+      navigate("/");
+    }
+  };
+
+  const onChangeId = (e) => {
+    setInputId(e.target.value);
   };
 
   return (
@@ -198,38 +285,57 @@ const FindIdPwd = () => {
             )}
           </div>
           <div>
-            <div className="Title">비밀번호 찾기</div>
+            <div className="Title">비밀번호 변경</div>
           </div>
           <Item1>
             <div style={{ whiteSpace: "nowrap" }}>아이디:</div>
             <div style={{ display: "flex" }}>
-              <Item3></Item3>
-              <Button2>전송</Button2>
+              <Item3
+                placeholder="아이디(이메일)"
+                value={inputId}
+                onChange={onChangeId}
+              ></Item3>
+              <Button2 onClick={() => SingupIdCheck(inputId)}>확인</Button2>
             </div>
           </Item1>
           <Item1>
             <div style={{ whiteSpace: "nowrap" }}>인증번호 입력 : </div>
             <div style={{ display: "flex" }}>
-              <Item3></Item3>
-              <Button2>인증</Button2>
+              <Item3
+                placeholder="인증번호를 입력해주세요"
+                value={inputCert}
+                onChange={(e) => setInputCert(e.target.value)}
+              ></Item3>
+              <Button2 onClick={handleCertification}>인증</Button2>
             </div>
           </Item1>
-
-          <div
-            style={{
-              height: "15px",
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              marginBottom: "1rem",
-            }}
-          >
-            <Item1>
-              회원님의 비밀번호는 <div></div> 입니다.
-            </Item1>
-          </div>
+          <Item1>
+            <div style={{ whiteSpace: "nowrap" }}>새 비밀번호 입력 : </div>
+            <div style={{ display: "flex" }}>
+              <Item3
+                disabled={able}
+                placeholder="변경할 비밀번호를 입력해주세요"
+                onChange={(e) => setChangePw(e.target.value)}
+              ></Item3>
+              <Button2
+                disabled={able}
+                onClick={() => changePwd(inputId, changePw)}
+              >
+                변경
+              </Button2>
+            </div>
+          </Item1>
         </Container>
       </Box>
+      <Modal
+        type1="0"
+        type="1"
+        open={modalOpen}
+        confirm={closeModal}
+        header="메시지"
+      >
+        {modalText}
+      </Modal>
     </CenteredContainer>
   );
 };

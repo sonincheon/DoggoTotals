@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import AxiosApi from "../../api/Axios";
 
 // 전체 컨테이너에 대한 스타일드 컴포넌트
 const Container = styled.div`
@@ -274,52 +275,51 @@ const Chatbot = () => {
   };
 
   // 챗봇 응답 생성 함수
-  const generateBotResponse = (userInput) => {
-    // 버튼이 클릭되지 않았을 때는 빈 응답 반환
-    if (!buttonClicked) {
-      return "도움이 필요한 항목을 선택하여 다시 질문해주세요";
-    }
-
-    // 간단한 패턴 매칭을 통해 사용자 입력에 따른 응답 생성
-    const lowercaseInput = userInput.toLowerCase();
-
-    if (clickedButtonNumber === 1) {
-      const foundAnimal = animal.find((a) =>
-        lowercaseInput.includes(a.name.toLowerCase())
-      );
-
-      if (foundAnimal) {
-        // '치와와'에 대한 정보와 버튼을 포함한 응답 생성
-        return (
-          <chat1>
-            {foundAnimal.name}에 관한 정보입니다.
-            <ul style={{ listStyleType: "none" }}>
-              <li>
-                <Image src={foundAnimal.img} alt={foundAnimal.name} />
-              </li>
-              <li>크기: {foundAnimal.size}</li>
-              <li>설명: {foundAnimal.explain}</li>
-            </ul>{" "}
-            <ButtonBox>
-              <MoreButton onClick={() => handleButtonClick(foundAnimal.url)}>
-                {foundAnimal.name} 정보 보기
-              </MoreButton>
-            </ButtonBox>
-          </chat1>
-        );
-      } else {
-        return "죄송해요, 이해하지 못했어요. 다시 한번 설명해주시겠어요?";
+  const generateBotResponse = async (userInput) => {
+      // 버튼이 클릭되지 않았을 때는 빈 응답 반환
+      if (!buttonClicked) {
+        return "도움이 필요한 항목을 선택하여 다시 질문해주세요";
       }
-    } else if (clickedButtonNumber === 2) {
-      // 2번 버튼에 대한 응답 처리
-    } else if (clickedButtonNumber === 3) {
-      // 3번 버튼에 대한 응답 처리
-    } else if (clickedButtonNumber === 4) {
-      // 4번 버튼에 대한 응답 처리
-    }
 
-    // 추가적인 처리가 필요한 경우에 따라 확장할 수 있습니다.
-  };
+      // 간단한 패턴 매칭을 통해 사용자 입력에 따른 응답 생성
+      const lowercaseInput = userInput.toLowerCase();
+
+      if (clickedButtonNumber === 1) {
+        try {
+          const response = await AxiosApi.catSearch(lowercaseInput);
+          // API 응답에 따른 동작 수행
+          const catInfo = response.data;
+          console.log(response.data);
+          // '치와와'에 관한 정보와 버튼을 포함한 응답 생성
+          return (
+            <chat1>
+              {catInfo.name}에 관한 정보입니다.
+              <ul style={{ listStyleType: "none" }}>
+                <li>
+                  <Image src={catInfo.img} alt={catInfo.name} />
+                </li>
+                <li>크기: {catInfo.size}</li>
+                <li>설명: {catInfo.explain}</li>
+              </ul>{" "}
+              <ButtonBox>
+                <MoreButton onClick={() => handleButtonClick(catInfo.url)}>
+                  {catInfo.name} 정보 보기
+                </MoreButton>
+              </ButtonBox>
+            </chat1>
+          );
+        } catch (error) {
+          console.error("Error fetching cat information:", error);
+          return "죄송해요, 정보를 가져오는 중에 문제가 발생했어요.";
+        }
+      } else if (clickedButtonNumber === 2) {
+        // 2번 버튼에 대한 응답 처리
+      } else if (clickedButtonNumber === 3) {
+        // 3번 버튼에 대한 응답 처리
+      } else if (clickedButtonNumber === 4) {
+        // 4번 버튼에 대한 응답 처리
+      }
+    };
 
   // 렌더링
   return (

@@ -603,6 +603,7 @@ const SignUp = () => {
               value={inputCert}
               onChange={(e) => setInputCert(e.target.value)}
               readOnly={readOnly}
+              disabled={btnAble}
             />
             <Button2 onClick={handleCertification} disabled={btnAble}>
               인증

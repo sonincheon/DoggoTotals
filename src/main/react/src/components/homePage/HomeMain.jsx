@@ -115,7 +115,7 @@ const HomeMain = () => {
         </SectionContainer> */}
       </CurrentAddressContext.Provider>
 
-      {/* <ChatbotIcon
+      <ChatbotIcon
         src={ChatBotImg}
         onClick={showChatbot ? closeChatbot : toggleChatbot}
       />
@@ -123,7 +123,7 @@ const HomeMain = () => {
         <ChatbotBox>
           <Chatbot />
         </ChatbotBox>
-      ) : null} */}
+      ) : null}
     </>
   );
 };

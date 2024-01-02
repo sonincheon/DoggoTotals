@@ -44,8 +44,8 @@ public class AuthController {
     }
 
     //비밀번호 변경
-    @PostMapping("/change/{email}")
-    public ResponseEntity<Boolean> passwordChange(@PathVariable String email ,@RequestBody String password) {
+    @PostMapping("/change/{email}/{password}")
+    public ResponseEntity<Boolean> passwordChange(@PathVariable String email ,@PathVariable String password) {
         log.info("email: {}", email);
         boolean isTrue = authService.passwordChange(email,password);
         return ResponseEntity.ok(isTrue);
