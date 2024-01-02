@@ -265,7 +265,7 @@ const Quicksale1 = () => {
                     </th>
                     <th style={{
                         width: "18%",
-                        display:"flex", justifyContent:"start"}}>송장번호:{data.invoice}</th>
+                        display:"flex", justifyContent:"start"}}> 송장번호:{data.invoice} 상태:{data.orderStatus}</th>
                     <th style={{ width: "15%", display:"flex", justifyContent:"start"}}>
                       <CancleButton style={{ backgroundColor: "#F95001" }}>
                         변경
