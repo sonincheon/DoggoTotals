@@ -108,6 +108,7 @@ const UploadButton = styled.button`
   color: #333333;
   background: white;
   border: 1px solid #f95001;
+cursor: pointer;
 
   &:hover {
     color: #f95001;
@@ -195,12 +196,14 @@ const ServiceWrite = () => {
       console.log("문의 유형과 내용을 모두 작성 해주세요.");
     }
     try {
-      const rsp = await ServiceApi.boardPlus(boardType, comment, boardImg);
-      if (rsp.data === true) {
-        console.log(rsp.data);
-        navigate(-1);
-      } else {
-      }
+      const rsp = await ServiceApi.boardPlus(boardType, comment, url);
+     if (rsp.data === true) {
+           alert("문의글 작성 완료.");
+           setUrl("");
+           navigate(-1);
+         } else {
+           alert("문의글 작성 실패.");
+         }
     } catch (error) {
       console.log("error");
     }

@@ -17,7 +17,7 @@ const MapModal = ({
     if (selectedItemRef.current) {
       selectedItemRef.current.scrollIntoView({
         behavior: "smooth",
-        block: "start",
+        block: "center",
       });
     }
   }, [openMarkerId]);

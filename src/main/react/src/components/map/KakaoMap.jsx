@@ -206,6 +206,7 @@ const KakaoMap = () => {
   const handleKeywordSelect = (selectedKeyword) => {
     setKeyword(selectedKeyword);
     setIsSidebarOpen(true);
+    setIsModalOpen(true);
     if (lastCenter) {
       // 이미 이동한 지도의 중심 좌표가 있으면 해당 위치를 기반으로 검색
       searchPlaces(lastCenter, 1);
@@ -213,6 +214,7 @@ const KakaoMap = () => {
       // 처음 페이지 로딩 시 현재 위치를 기반으로 검색
       searchPlaces(state.center, 1);
     }
+
   };
 
   return (
@@ -221,8 +223,10 @@ const KakaoMap = () => {
         <Map
           center={state.center}
           style={{
-            width: "100vw",
-            height: "70vh",
+          width:"100%",
+          height:"70vh"
+//             width: "100vw",
+//             height: "70vh",
           }}
           level={3}
           onCreate={setMap} // 지도가 생성될 때 setMap 함수를 호출해 지도 객체 업데이트 추가
@@ -336,7 +340,9 @@ const KakaoMap = () => {
         {/* 모바일 화면일 경우 검색 결과 모달로 표시 */}
         {isMobile && (
           <S.MapModal>
-            <S.ModalBtn onClick={() => setIsModalOpen((prev) => !prev)}>
+            <S.ModalBtn
+            isClosed={!isModalOpen}
+            onClick={() => setIsModalOpen((prev) => !prev)}>
               <img src={dog} alt="" />
             </S.ModalBtn>
             <MapModal
