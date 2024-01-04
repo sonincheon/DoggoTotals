@@ -15,7 +15,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  background-color: #ebebeb;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 
   .Enter {
@@ -26,7 +26,6 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    background-color: #ebebeb;
     border-radius: 10px;
 
     @media (max-width: 1280px) {
@@ -90,7 +89,7 @@ const Items = styled.div`
     width: 50%;
     margin-top: 20px;
     justify-content: center;
-    color: red;
+    color: black;
     font-size: 14px;
     display: flex;
     margin-bottom: 2rem;
@@ -125,7 +124,7 @@ const Items = styled.div`
 
     &:hover {
       span {
-        color: blue;
+        color: #f95001;
         text-decoration-line: underline;
       }
     }
@@ -150,15 +149,15 @@ const Button1 = styled.button`
   font-size: 26px;
   font-weight: bold;
   width: 60%; /* 원하는 너비 설정 */
-  height: 55px;
+  height: 45px;
   color: white;
   background-color: #333333;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 400;
   border-radius: 12px;
-  font-weight: 700;
   border: none;
   cursor: pointer;
+  font-family: inherit;
 
   &:active {
     //확인 클릭하면 설정
@@ -174,7 +173,7 @@ const Button2 = styled.button`
     margin-right: 30px;
     font-weight: bold;
     width: 60%; /* 원하는 너비 설정 */
-    height: 55px;
+    height: 45px;
     color: black;
     background-image: url(${kakaoLogin});
     border-radius: 12px;
@@ -182,6 +181,7 @@ const Button2 = styled.button`
     cursor: pointer;
     background-size: cover; /* 이미지를 버튼에 맞게 늘리거나 축소함 */
     background-repeat: no-repeat; /* 이미지 반복을 방지 */
+    background-position: center;
 
   &:active {
     //확인 클릭하면 설정

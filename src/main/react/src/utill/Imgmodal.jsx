@@ -5,6 +5,11 @@ import AxiosApi from "../api/Axios";
 import profile from "../img/profile2.png";
 
 const ModalStyle = styled.div`
+  .Upload {
+      display: flex;
+      justify-content: center;
+    }
+
   .modal {
     display: none; // 숨겨진 상태로 시작
     position: fixed; // 스크롤해도 동일한 위치
@@ -109,7 +114,7 @@ const Exist1 = styled.div`
   justify-content: center;
   flex-direction: column;
   margin-bottom: 1rem;
-  margin-right: 4rem;
+  margin-right: 2rem;
 `;
 
 const Exist2 = styled.img`
@@ -120,6 +125,11 @@ const Exist2 = styled.img`
   margin-bottom: 10px;
   background-image: url(${profile});
   background-position: center;
+
+  @media (max-width: 768px) {
+      width: 180px;
+      height: 180px;
+    }
 `;
 
 const FileUploadContainer = styled.div`
@@ -127,8 +137,13 @@ const FileUploadContainer = styled.div`
   flex-direction: column;
   align-items: end;
   margin-bottom: 20px;
+  width: 100%;
   height: 100px;
   box-sizing: border-box;
+
+  @media (max-width: 768px) {
+      width: 300px;
+    }
 `;
 
 const StyledInput = styled.input`
@@ -165,6 +180,11 @@ const ImgBox = styled.div`
   background-image: url(${profile});
   background-position: center;
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+      width: 180px;
+      height: 180px;
+    }
 `;
 
 const Imgmodal = (props) => {
@@ -233,6 +253,7 @@ const Imgmodal = (props) => {
               }}
             >
               <div
+                className="Box"
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -253,12 +274,14 @@ const Imgmodal = (props) => {
                     </div>
                   </Change1>
                 </div>
+                <div className="Upload">
                 <FileUploadContainer>
                   <StyledInput type="file" onChange={handleFileInputChange} />
                   <UploadButton onClick={handleUploadClick}>
                     사진 업로드
                   </UploadButton>
                 </FileUploadContainer>
+                </div>
               </div>
             </main>
             <footer>

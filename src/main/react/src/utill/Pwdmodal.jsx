@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import AxiosApi from "../api/Axios";
 
 const ModalStyle = styled.div`
   .modal {
@@ -93,131 +94,161 @@ const ModalStyle = styled.div`
   }
 `;
 
-const Change1 = styled.div`
+const Item1 = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+  font-size: 13px;
 `;
 
-const Change3 = styled.input`
-  width: 300px;
-  height: 25px;
-  text-justify: center;
-  border-radius: 10px;
-  margin-bottom: 5px;
+const Item3 = styled.input`
+  border-radius: 8px;
+  width: 15vw;
+  height: 4vh;
+  min-width: 200px;
 `;
 
-const Change2 = styled.div`
-  .hint {
-    height: 15px;
-    font-size: 10px;
-    display: flex;
-    justify-content: end;
+const Button2 = styled.button`
+  width: 5vw;
+  height: 4vh;
+  border-radius: 8px;
+  background-color: #333333;
+  color: white;
+  cursor: pointer;
+  min-width: 70px;
+
+  opacity: ${(props) =>
+    props.disabled ? "0.7" : "1"}; // 비활성화 상태일 때 투명도 설정
+
+  &:active {
+    //확인 클릭하면 설정
+    border: #999;
+    font-weight: 700;
+    background-color: #5c5b5b;
   }
 `;
 
 const Pwdmodal = (props) => {
-  const { open, confirm, close, type, detail } = props;
+  const { open, close, detail } = props;
 
-  const [inputPw, setInputPw] = useState("");
-  const [inputConPw, setInputConPw] = useState("");
-  const [pwMessage, setPwMessage] = useState("");
-  const [conPwMessage, setConPwMessage] = useState("");
-  const [isPw, setIsPw] = useState(false);
-  const [isConPw, setIsConPw] = useState(false);
-
-  const onChangePw = (e) => {
-    //const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
-    const passwordCurrent = e.target.value;
-    setInputPw(passwordCurrent);
-    if (!passwordRegex.test(passwordCurrent)) {
-      setPwMessage("숫자+영문자 조합으로 8자리 이상 입력해주세요!");
-      setIsPw(false);
-    } else {
-      setPwMessage("안전한 비밀번호에요 : )");
-      setIsPw(true);
-    }
-  };
-  const onChangeConPw = (e) => {
-    const passwordCurrent = e.target.value;
-    setInputConPw(passwordCurrent);
-    if (passwordCurrent !== detail) {
-      setConPwMessage("비밀 번호가 일치하지 않습니다.");
-      setIsConPw(false);
-    } else {
-      setConPwMessage("비밀 번호가 일치 합니다. )");
-      setIsConPw(true);
-    }
-  };
+      const [sendEmail, setSendEmail] = useState("");
+      const [inputCert, setInputCert] = useState("");
+      const [changePw, setChangePw] = useState("");
+      const [able, setAble] = useState(true);
 
   const Close = () => {
-    setInputConPw("");
-    setInputPw("");
-    close();
-  };
+        close();
+        setInputCert("");
+        setChangePw("");
+      };
+
+      const SingupIdCheck = async (detail) => {
+        const resp = await AxiosApi.SingupIdCheck(detail);
+        console.log("가입 가능 여부 확인 : ", resp.data);
+        if (resp.data === false) {
+          const response = await AxiosApi.EmailCert(detail);
+          if (response.status === 200) {
+            alert("인증번호가 발송되었습니다. 이메일을 확인해주세요");
+            setSendEmail(response.data);
+          } else {
+            alert("이메일 전송에 실패했습니다.");
+          }
+        } else {
+          alert("존재하지 않는 이메일입니다.");
+        }
+      };
+
+    const handleCertification = () => {
+        if (inputCert === sendEmail && inputCert !== "") {
+          // 인증번호가 일치할 때
+          alert("인증이 완료되었습니다.");
+          setAble(false);
+        } else {
+          // 인증번호가 일치하지 않을 때
+          alert("인증에 실패하였습니다.");
+        }
+      };
+
+      const changePwd = async (detail, newPwd) => {
+        try {
+          const response = await AxiosApi.changePwd(detail, newPwd);
+          console.log(newPwd);
+          console.log(response);
+          if (response.data === true) {
+            alert("비밀번호가 성공적으로 변경되었습니다.");
+            Close();
+          } else {
+            alert("비밀번호 변경에 실패했습니다.");
+            Close();
+          }
+        } catch (error) {
+          alert("비밀번호 변경에 실패했습니다. 오류가 발생했습니다.");
+          Close();
+        }
+      };
+
 
   // &times; 는 X표 문자를 의미
   return (
     <ModalStyle>
-      <div className={open ? "openModal modal" : "modal"}>
-        {open && (
-          <section>
-            <header>비밀번호 변경</header>
-            <main
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "column",
-              }}
-            >
-              <Change1>
-                <div>기존 비밀번호 : </div>
-                <Change2>
-                  <Change3
-                    value={inputConPw}
-                    onChange={onChangeConPw}
-                  ></Change3>
-                  <div className="hint">
-                    {inputConPw.length > 0 && (
-                      <span
-                        className={`message ${isConPw ? "success" : "error"}`}
+       <div className={open ? "openModal modal" : "modal"}>
+                  {open && (
+                    <section>
+                      <header>비밀번호 변경</header>
+                      <main
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          flexDirection: "column",
+                        }}
                       >
-                        {conPwMessage}
-                      </span>
-                    )}
-                  </div>
-                </Change2>
-              </Change1>
-              <Change1>
-                <div>수정 비밀번호 : </div>
-                <Change2>
-                  <Change3 value={inputPw} onChange={onChangePw}></Change3>
-                  <div className="hint">
-                    {inputPw.length > 0 && (
-                      <span className={`message ${isPw ? "success" : "error"}`}>
-                        {pwMessage}
-                      </span>
-                    )}
-                  </div>
-                </Change2>
-              </Change1>
-            </main>
-            <footer>
-              {type && (
-                <button
-                  onClick={confirm}
-                  disabled={inputConPw !== detail}
-                  style={{ opacity: inputConPw !== detail ? 0 : 1 }}
-                >
-                  수정
-                </button>
-              )}
-              <button onClick={Close}>취소</button>
-            </footer>
-          </section>
-        )}
-      </div>
-    </ModalStyle>
+                        <Item1>
+                          <div style={{ whiteSpace: "nowrap" }}>아이디:</div>
+                          <div style={{ display: "flex" }}>
+                            <Item3
+                              placeholder="아이디(이메일)"
+                              value={detail}
+                              readOnly
+                            ></Item3>
+                            <Button2 onClick={() => SingupIdCheck(detail)}>확인</Button2>
+                          </div>
+                        </Item1>
+                        <Item1>
+                          <div style={{ whiteSpace: "nowrap" }}>인증번호 입력 : </div>
+                          <div style={{ display: "flex" }}>
+                            <Item3
+                              placeholder="인증번호를 입력해주세요"
+                              value={inputCert}
+                              onChange={(e) => setInputCert(e.target.value)}
+                            ></Item3>
+                            <Button2 onClick={handleCertification}>인증</Button2>
+                          </div>
+                        </Item1>
+                        <Item1>
+                          <div style={{ whiteSpace: "nowrap" }}>새 비밀번호 입력 : </div>
+                          <div style={{ display: "flex" }}>
+                            <Item3
+                              disabled={able}
+                              placeholder="변경할 비밀번호를 입력해주세요"
+                              onChange={(e) => setChangePw(e.target.value)}
+                            ></Item3>
+                            <Button2
+                              disabled={able}
+                              onClick={() => changePwd(detail, changePw)}
+                            >
+                              변경
+                            </Button2>
+                          </div>
+                        </Item1>
+                      </main>
+                      <footer>
+                        <button onClick={Close}>취소</button>
+                      </footer>
+                    </section>
+                  )}
+                </div>
+              </ModalStyle>
   );
 };
 

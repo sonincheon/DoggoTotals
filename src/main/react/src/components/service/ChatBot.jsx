@@ -6,7 +6,6 @@ import AxiosApi from "../../api/Axios";
 // 전체 컨테이너에 대한 스타일드 컴포넌트
 const Container = styled.div`
   width: 100%;
-  border: 1px solid black;
 
   ::before {
     content: "";
@@ -154,25 +153,8 @@ const WelcomeButton = styled.button`
   cursor: pointer;
 
   @media (max-width: 1280px) {
-    font-size: 9px;
+    font-size: 8px;
   }
-`;
-
-const MoreButton = styled.button`
-  display: flex;
-  width: auto;
-  padding: 5px 10px;
-  background-color: #87c4ff; /* 녹색으로 변경 */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-`;
-
-const ButtonBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
 `;
 
 const Chatbot = () => {
@@ -181,26 +163,9 @@ const Chatbot = () => {
   const [inputText, setInputText] = useState("");
   const [showWelcome, setShowWelcome] = useState(true);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const [clickedButtonNumber, setClickedButtonNumber] = useState(null);
+  const [clickedButtonNumber, setClickedButtonNumber] = useState(0);
 
   const navigate = useNavigate();
-
-  const animal = [
-    {
-      name: "치와와",
-      size: "15cm~20cm",
-      explain: "졸귀탱 강아지",
-      img: "https://firebasestorage.googleapis.com/v0/b/dogcat-42fca.appspot.com/o/%EA%B0%95%EC%95%84%EC%A7%80%20%EC%82%AC%EC%A7%84%2F%EC%B9%98%EC%99%80%EC%99%80.jpg?alt=media&token=83eee3ab-9fa3-443b-9769-2d4e9961ac7f",
-      url: "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EC%B9%98%EC%99%80%EC%99%80&oquery=%EC%8B%9C%EB%B0%94%EA%B2%AC&tqi=iT7LOwqVOsVsshWcUb8ssssstEs-078421",
-    },
-    {
-      name: "시바",
-      size: "15cm~20cm",
-      explain: "귀여운 강아지",
-      img: "https://firebasestorage.googleapis.com/v0/b/dogcat-42fca.appspot.com/o/%EA%B0%95%EC%95%84%EC%A7%80%20%EC%82%AC%EC%A7%84%2F%EC%8B%9C%EB%B0%94%EA%B2%AC.jpg?alt=media&token=b914c777-c6bb-4ee0-9d40-7f0e810f9317",
-      url: "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EC%8B%9C%EB%B0%94%EA%B2%AC",
-    },
-  ];
 
   useEffect(() => {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
@@ -212,10 +177,10 @@ const Chatbot = () => {
     // 버튼에 따라 다른 동작 수행
     if (buttonNumber === 1) {
       // 1번 버튼 클릭 시 동작
-      addMessage("검색할 종의 이름을 입력하세요.", "bot");
+      addMessage("검색할 묘종의 이름을 입력하세요.", "bot");
     } else if (buttonNumber === 2) {
       // 2번 버튼 클릭 시 동작
-      addMessage("조회하고 싶은 날짜를 선택하세요.", "bot");
+      addMessage("검색할 견종의 이름을 입력하세요.", "bot");
     } else if (buttonNumber === 3) {
       // 3번 버튼 클릭 시 동작.
       addMessage("멍냥일기 페이지로 이동합니다.", "bot");
@@ -252,37 +217,31 @@ const Chatbot = () => {
   };
 
   // 사용자가 메시지를 보낼 때 호출되는 함수
-  const handleSendMessage = () => {
+  const handleSendMessage = async() => {
     if (inputText.trim() === "") return;
 
     // 사용자가 입력한 메시지를 채팅창에 추가
     addMessage(inputText, "user");
 
     // 사용자 입력을 처리하고 챗봇 응답 생성
-    const botResponse = generateBotResponse(inputText);
+    const response = await generateBotResponse(inputText);
 
     // 챗봇 응답을 채팅창에 추가
-    addMessage(botResponse, "bot");
+    addMessage(response, "bot");
 
     // 입력창 초기화
     setInputText("");
   };
 
-  // 사용자가 버튼을 클릭했을 때 호출되는 함수
-  const handleButtonClick = (url) => {
-    // 새로운 창으로 링크 열기 (여기서는 네이버로 이동하는 예시)
-    window.location.href = url;
-  };
-
   // 챗봇 응답 생성 함수
-  const generateBotResponse = async (userInput) => {
+  const generateBotResponse = async (InputText) => {
       // 버튼이 클릭되지 않았을 때는 빈 응답 반환
       if (!buttonClicked) {
         return "도움이 필요한 항목을 선택하여 다시 질문해주세요";
       }
 
       // 간단한 패턴 매칭을 통해 사용자 입력에 따른 응답 생성
-      const lowercaseInput = userInput.toLowerCase();
+      const lowercaseInput = InputText.toLowerCase();
 
       if (clickedButtonNumber === 1) {
         try {
@@ -292,28 +251,64 @@ const Chatbot = () => {
           console.log(response.data);
           // '치와와'에 관한 정보와 버튼을 포함한 응답 생성
           return (
-            <chat1>
-              {catInfo.name}에 관한 정보입니다.
-              <ul style={{ listStyleType: "none" }}>
-                <li>
-                  <Image src={catInfo.img} alt={catInfo.name} />
-                </li>
-                <li>크기: {catInfo.size}</li>
-                <li>설명: {catInfo.explain}</li>
-              </ul>{" "}
-              <ButtonBox>
-                <MoreButton onClick={() => handleButtonClick(catInfo.url)}>
-                  {catInfo.name} 정보 보기
-                </MoreButton>
-              </ButtonBox>
-            </chat1>
+           <chat1>
+                         {catInfo.korean_name}에 관한 정보입니다.
+                         <ul style={{ listStyleType: "none" }}>
+                           <li>
+                             <Image src={catInfo.image_link} alt={catInfo.name} />
+                           </li>
+                           <li>크기: {catInfo.length}</li>
+                           <li>
+                             체중: {catInfo.min_weight}~{catInfo.max_weight} 파운드
+                           </li>
+                         </ul>{" "}
+                       </chat1>
           );
         } catch (error) {
           console.error("Error fetching cat information:", error);
-          return "죄송해요, 정보를 가져오는 중에 문제가 발생했어요.";
+          return "해당하는 묘종을 찾을 수 없습니다.";
         }
       } else if (clickedButtonNumber === 2) {
-        // 2번 버튼에 대한 응답 처리
+        try {
+                  const response = await AxiosApi.dogSearch(lowercaseInput);
+                  // API 응답에 따른 동작 수행
+                  const dogInfo = response.data;
+                  console.log(response.data);
+                  // '치와와'에 관한 정보와 버튼을 포함한 응답 생성
+                  return (
+                    <chat1>
+                      {dogInfo.korean_name}에 관한 정보입니다.
+                      <ul style={{ listStyleType: "none" }}>
+                        <li>
+                          <Image src={dogInfo.image_link} alt={dogInfo.name} />
+                        </li>
+                        <li>
+                          기대수명: {dogInfo.min_life_expectancy}~
+                          {dogInfo.max_life_expectancy}년
+                        </li>
+                        <li>
+                          수컷 크기: {dogInfo.min_height_male}~{dogInfo.max_height_male}{" "}
+                          인치
+                        </li>
+                        <li>
+                          암컷 크기: {dogInfo.min_height_female}~
+                          {dogInfo.max_height_female} 인치
+                        </li>
+                        <li>
+                          수컷 체중: {dogInfo.min_weight_male}~{dogInfo.max_weight_male}{" "}
+                          파운드
+                        </li>
+                        <li>
+                          암컷 체중: {dogInfo.min_weight_female}~
+                          {dogInfo.max_weight_female} 파운드
+                        </li>
+                      </ul>{" "}
+                    </chat1>
+                  );
+                } catch (error) {
+                  console.error("Error fetching cat information:", error);
+                  return "해당하는 견종을 찾을 수 없습니다.";
+                }
       } else if (clickedButtonNumber === 3) {
         // 3번 버튼에 대한 응답 처리
       } else if (clickedButtonNumber === 4) {
@@ -332,10 +327,10 @@ const Chatbot = () => {
             </p>
             <WelcomeButtons>
               <WelcomeButton onClick={() => handleWelcomeButtonClick(1)}>
-                동물도감
+                묘종검색
               </WelcomeButton>
               <WelcomeButton onClick={() => handleWelcomeButtonClick(2)}>
-                산책지수
+                견종검색
               </WelcomeButton>
               <WelcomeButton onClick={() => handleWelcomeButtonClick(3)}>
                 멍냥일기

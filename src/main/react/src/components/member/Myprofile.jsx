@@ -99,6 +99,13 @@ const Input = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
 
+  .Input {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      font-size: 15px;
+    }
+
   @media (max-width: 1280px) {
     font-size: 14px;
   }
@@ -214,7 +221,7 @@ const Myprofile = () => {
   const [bodyContent, setBodyContent] = useState("");
   const [modalOpen1, setModalOpen1] = useState(false);
   const [modalOpen2, setModalOpen2] = useState(false);
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [image, setImage] = useState("");
   const [changeCase, setChangeCase] = useState("");
 
@@ -242,10 +249,10 @@ const Myprofile = () => {
     setModalOpen(true);
   };
 
-  const openClick1 = (Password) => {
-    setModalOpen1(true);
-    setPassword(Password);
-  };
+  const openClick1 = (memberEmail) => {
+      setModalOpen1(true);
+      setEmail(memberEmail);
+    };
 
   const openClick2 = (img, changeCase) => {
     setModalOpen2(true);
@@ -265,19 +272,6 @@ const Myprofile = () => {
       alert("회원 탈퇴에 실패했습니다.");
     }
   };
-
-  const member = [
-    {
-      img: "https://firebasestorage.googleapis.com/v0/b/dogcat-42fca.appspot.com/o/KDcViVN5lc9nXMk9kayDMM1E4MLfKV2ouBZdod6Drpsz8X6V71hi0io22P5eH8G_SoIbmtVgh_5pl3x2xzDaXQq_cCG0bNovXTCRUs9Hxico_Tx7chlHEVhTc0_GWP8hK-7-dQjGJJLX4qdjzLVxZw.jpg?alt=media&token=5ac08f40-1599-4a19-b65e-bd5e57b24cb2",
-      Name: "손인천",
-      Email: "in1000s@naver.com",
-      Address: "서울특별시 신림동 신사로 12길 32",
-      Gender: "남",
-      Birth: "2000-02-02",
-      Tel: "010-9118-4893",
-      Password: "son12345",
-    },
-  ];
 
   useEffect(() => {
     const getMember = async () => {
@@ -320,21 +314,23 @@ const Myprofile = () => {
           <InputBox>
             <div className="item1">이메일</div>
             <div className="item2">
-              <Input>{detail.memberEmail}</Input>
-              <div></div>
+              <Input>
+                <div className="Input">{detail.memberEmail}</div>
+              </Input>
             </div>
           </InputBox>
           <InputBox>
             <div className="item1">성별</div>
             <div className="item2">
               <Input>{detail.memberGender}</Input>
-              <div></div>
             </div>
           </InputBox>
           <InputBox>
             <div className="item1">생년월일</div>
             <div className="item2">
-              <Input>{detail.memberBirth}</Input>
+              <Input>
+                <div className="Input">{detail.memberBirth}</div>
+              </Input>
               <Btn
                 onClick={() =>
                   openClick("생년월일 변경", "생년월일", detail.memberBirth, 1)
@@ -373,7 +369,7 @@ const Myprofile = () => {
             </div>
           </InputBox>
           <Btn1>
-            <Btn2 onClick={() => openClick1(member[0].Password)}>
+            <Btn2 onClick={() => openClick1(detail.memberEmail)}>
               비밀번호 변경
             </Btn2>
             <Btn2 onClick={() => navigate("/service")}>1대1 문의하기</Btn2>
@@ -394,7 +390,7 @@ const Myprofile = () => {
         type={1}
         open={modalOpen1}
         close={closeModal1}
-        detail={password}
+        detail={email}
       ></Pwdmodal>
       <Imgmodal
         open={modalOpen2}

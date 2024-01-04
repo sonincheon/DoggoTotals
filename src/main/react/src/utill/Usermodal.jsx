@@ -104,7 +104,6 @@ const ModalStyle = styled.div`
 
 const Change1 = styled.div`
   display: flex;
-  justify-content: space-between;
 
   .react-datepicker__navigation--years-upcoming {
     top: 0%;
@@ -125,6 +124,16 @@ const Change1 = styled.div`
     cursor: pointer;
     background-size: 70%;
   }
+
+  .Calender {
+        width: 300px;
+        margin-left: 20px;
+      }
+
+      .Post {
+        width: 110px;
+        margin-left: 5px;
+      }
 `;
 
 const Change2 = styled.input`
@@ -132,6 +141,7 @@ const Change2 = styled.input`
   height: 25px;
   text-justify: center;
   border-radius: 10px;
+  margin-left: 20px;
 `;
 
 const Exist1 = styled.div`
@@ -170,7 +180,6 @@ const Usermodal = (props) => {
     } else if (type === 2) {
       // 주소 변경의 경우
       const address = `${post} ${postDetail} ${postNum}`;
-      console.log("제발 쳐 나와라" + type + address);
       setInfo(address); // 전체 주소를 info에 업데이트
     } else {
       // 기본적으로는 일반 input 사용
@@ -222,7 +231,6 @@ const Usermodal = (props) => {
       setPost("");
       setPostNum("");
       setPostDetail("");
-      console.log("시발아" + updatedInfo);
     } catch (error) {
       console.error(error);
       alert("회원 정보 수정에 실패했습니다.");
@@ -300,19 +308,30 @@ const Usermodal = (props) => {
                       onClick={() => {
                         openPostCode();
                       }}
+                      className="Post"
                     />
-                    <input value={postNum} readOnly />
+                    <input value={postNum} readOnly className="Post" />
                     <input
                       value={postDetail}
                       onChange={(e) => {
                         setPostDetail(e.target.value);
                         // 주소 정보가 변경될 때 onChangeInfo 호출
                       }}
+                      className="Post"
                     />
                   </div>
                 ) : (
                   // 기본적으로는 일반 input 사용
-                  <Change2 value={info} onChange={(e) => setInfo(e)} />
+                  <Change2
+                                                        value={info}
+                                                        onInput={(e) => {
+                                                          // 입력값이 숫자인지 확인 후 숫자만 유효한 값으로 설정
+                                                          const inputValue = e.target.value;
+                                                          if (/^\d*$/.test(inputValue)) {
+                                                            setInfo(inputValue);
+                                                          }
+                                                        }}
+                                                      />
                 )}
               </Change1>
             </main>

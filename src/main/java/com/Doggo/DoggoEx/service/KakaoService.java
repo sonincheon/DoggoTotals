@@ -31,7 +31,7 @@ public class KakaoService {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             params.add("grant_type", "authorization_code");
             params.add("client_id", "afb202ab4753ffdab4ab8549b0395416");
-            params.add("redirect_url", "http://localhost:3000/auth");
+            params.add("redirect_url", "http://localhost:8111/auth");
             params.add("code", code);
 
             HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =

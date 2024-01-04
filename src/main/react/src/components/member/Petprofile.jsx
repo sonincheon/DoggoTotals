@@ -12,7 +12,6 @@ const BoxContent = styled.div`
   overflow-x: hidden;
   height: 87vh;
   min-height: 850px;
-  min-width: 650px;
 
   &::-webkit-scrollbar {
     width: 13px; // 스크롤바의 너비
@@ -40,30 +39,41 @@ const BoxContent1 = styled.div`
   width: 99%;
   background-color: #ebebeb;
   display: flex;
-  justify-content: space-around;
   align-items: center;
   margin-bottom: 1rem;
   border-radius: 10px;
+  justify-content: space-between;
   padding: 10px;
-  min-width: 630px;
   padding: 1rem;
+
+  @media (max-width: 1280px) {
+      display: flex;
+      flex-direction: column;
+    }
 `;
 
 const PetProfile = styled.img`
   width: 200px;
   height: 200px;
   border-radius: 100%;
-  margin-left: 1rem;
+  background-image: url(${petprofile});
+    background-position: center;
+    flex-shrink: 0;
+    margin-left: 3rem;
+
+    @media (max-width: 1280px) {
+      width: 190px;
+      height: 190px;
+      margin-left: 0;
+    }
 `;
 
 const PetInfo1 = styled.div`
-  min-width: 400px;
   position: relative;
   border-radius: 10px;
   padding: 10px 14px 10px 20px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   z-index: 1;
 
@@ -86,8 +96,8 @@ const PetInfo1 = styled.div`
 `;
 
 const PetInfo2 = styled.div`
-  .PetSign {
-  }
+  margin-right: 5rem;
+    white-space: nowrap;
 `;
 
 const PetInfo3 = styled.div`
@@ -95,6 +105,7 @@ const PetInfo3 = styled.div`
   flex-direction: column;
   height: 25vh;
   width: 20%;
+  max-height: 100px;
 `;
 
 const Btn = styled.button`
@@ -111,20 +122,6 @@ const Btn = styled.button`
   &:active {
     background-color: #575656;
   }
-`;
-
-const Btn2 = styled.button`
-  padding: 4px 20px;
-  border-radius: 10px;
-  font-size: 14px;
-  color: #f95001;
-  font-weight: 900;
-  background-color: #fff;
-  box-sizing: border-box;
-  vertical-align: bottom;
-  margin-left: 5px;
-  border: none;
-  cursor: pointer;
 `;
 
 // 나이 계산 함수
@@ -187,12 +184,6 @@ const Petprofile = () => {
     petGet();
   }, [modalOpen]);
 
-  const Click = async (list) => {
-    console.log(list.id);
-    console.log(list.petName);
-    console.log("개냥이" + list.animalType.id);
-  };
-
   const handleDelete = async (id, petName) => {
     try {
       if (window.confirm(`${petName}을 삭제하시겠습니까?`)) {
@@ -225,7 +216,6 @@ const Petprofile = () => {
                 </div>
                 <div className="PetSign">
                   <span>종 : {list.breed}</span>
-                  <Btn2 onClick={() => Click(list)}>도감 보기</Btn2>
                 </div>
                 <div className="PetSign">특이사항 : {list.detail}</div>
                 <div className="PetSign">
@@ -262,7 +252,7 @@ const Petprofile = () => {
           </BoxContent1>
         ))}
         <BoxContent1>
-          <PetProfile src={petprofile} />
+          <PetProfile/>
           <PetInfo1>
             <PetInfo2>
               <div className="PetSign">더 많은 친구들을 추가해보세요!</div>
