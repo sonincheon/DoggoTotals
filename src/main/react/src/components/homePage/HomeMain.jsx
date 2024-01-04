@@ -67,7 +67,7 @@ export const DoggyIcon = ({ image, height }) => (
 
 const ChatbotBox = styled.div`
   position: fixed;
-  z-index: 1000;
+  z-index: 11;
   height: auto;
   bottom: 6%;
   left: 10%;
@@ -79,7 +79,8 @@ const ChatbotBox = styled.div`
     left: 14%; /* 뷰포트 크기가 768px 이하일 때의 값 */
   }
   @media (max-width: 768px) {
-    left: 23%; /* 뷰포트 크기가 768px 이하일 때의 값 */
+    left: 18%; /* 뷰포트 크기가 768px 이하일 때의 값 */
+        bottom: 4%;
   }
 `;
 
@@ -89,14 +90,17 @@ const ChatbotIcon = styled.img`
   min-width: 66px;
   right: 92%;
   cursor: pointer;
-  z-index: 9999;
+  z-index: 11;
   top: 87%;
+  opacity: 0.8;
 
   @media (max-width: 1280px) {
     right: 89%; /* 뷰포트 크기가 768px 이하일 때의 값 */
   }
   @media (max-width: 768px) {
-    right: 81%; /* 뷰포트 크기가 768px 이하일 때의 값 */
+    right: 87%; /* 뷰포트 크기가 768px 이하일 때의 값 */
+        top: 89%;
+        min-width: 53px;
   }
 `;
 
