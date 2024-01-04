@@ -28,13 +28,28 @@ const SectionContainer = styled.section.withConfig({
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: ${(props) => props.$width || "98vw"};
+  width: ${(props) => props.$width || "97.8vw"};
   height: ${(props) => props.$height || "52vw"};
   background-color: ${(props) => props.$backGround || "white"};
 
+  @media (max-width: 1500px) {
+
+    width: 97.5vw;
+  }
+
+  @media (max-width: 1200px) {
+
+    width: 97.2vw;
+  }
+
+  @media (max-width: 1000px) {
+
+    width: 96.8vw;
+  }
+
   @media (max-width: 768px) {
     height: 110vw;
-    /* margin-top: -30px; */
+    width: 93vw;
   }
 `;
 
