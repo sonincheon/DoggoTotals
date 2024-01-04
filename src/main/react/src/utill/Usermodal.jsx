@@ -128,11 +128,19 @@ const Change1 = styled.div`
   .Calender {
         width: 300px;
         margin-left: 20px;
+
+        @media (max-width: 768px) {
+              width: 250px;
+            }
       }
 
       .Post {
         width: 110px;
         margin-left: 5px;
+
+        @media (max-width: 768px) {
+              width: 80px;
+            }
       }
 `;
 
@@ -223,14 +231,24 @@ const Usermodal = (props) => {
         updatedInfo = info;
       }
 
+      if (
+              updatedInfo !== null &&
+              updatedInfo !== undefined &&
+              updatedInfo !== ""
+            ) {
       await AxiosApi.memberUpdate(updatedInfo, type);
       alert("회원 정보가 성공적으로 수정되었습니다.");
+      console.log("이게뭐야" + updatedInfo);
       close();
       setInfo("");
       setDatePlus("");
       setPost("");
       setPostNum("");
       setPostDetail("");
+      } else {
+              alert("수정할 정보가 없습니다.");
+              console.warn(updatedInfo);
+            }
     } catch (error) {
       console.error(error);
       alert("회원 정보 수정에 실패했습니다.");
@@ -271,11 +289,11 @@ const Usermodal = (props) => {
               }}
             >
               <Exist1>
-                <div>현재 {name} : </div>
+                <div className="Title">현재 {name} : </div>
                 <Exist2>{detail}</Exist2>
               </Exist1>
               <Change1>
-                <div>수정 {name} : </div>
+                <div className="Title">수정 {name} : </div>
                 {type === 1 ? (
                   // 생년월일 변경의 경우 달력 등의 입력 방식
                   <DatePicker
@@ -309,14 +327,16 @@ const Usermodal = (props) => {
                         openPostCode();
                       }}
                       className="Post"
+                      placeholder="주소"
                     />
-                    <input value={postNum} readOnly className="Post" />
+                    <input value={postNum} readOnly className="Post" placeholder="우편번호"/>
                     <input
                       value={postDetail}
                       onChange={(e) => {
                         setPostDetail(e.target.value);
                         // 주소 정보가 변경될 때 onChangeInfo 호출
                       }}
+                      placeholder="상세 주소"
                       className="Post"
                     />
                   </div>

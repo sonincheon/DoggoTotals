@@ -201,8 +201,8 @@ const PetProfile = styled.img`
   background-position: center;
 
   @media (max-width: 768px) {
-      width: 180px;
-      height: 180px;
+      width: 160px;
+      height: 160px;
     }
 `;
 
@@ -219,6 +219,11 @@ const PetInfo3 = styled.div`
   width: 400px;
   align-items: center;
   padding: 7px 0px 5px 7px;
+  white-space: nowrap;
+
+    @media (max-width: 768px) {
+      width: 360px;
+    }
 
   .Calender {
       width: 300px;
@@ -263,7 +268,7 @@ const Exist1 = styled.div`
   justify-content: center;
   flex-direction: column;
   margin-bottom: 1rem;
-  margin-right: 2rem;
+  margin-right: 1rem;
 `;
 
 const Exist2 = styled.img`
@@ -324,8 +329,8 @@ const ImgBox = styled.div`
   background-position: center;
 
   @media (max-width: 768px) {
-      width: 180px;
-      height: 180px;
+      width: 160px;
+      height: 160px;
     }
 `;
 
@@ -400,7 +405,18 @@ const Petmodal = (props) => {
   const navigate = useNavigate();
 
   const petUpload = async () => {
-    console.log("Inside petUpload:", inputType);
+  if (
+        !inputName ||
+        !inputGender ||
+        !inputType ||
+        !inputBreed ||
+        !inputAge ||
+        !inputSign ||
+        !inputType
+      ) {
+        alert("모든 항목을 입력해주세요.");
+        return; // 빈 값이 있을 경우 함수 종료
+      } else {
     try {
       const rsp = await AxiosApi.petReg(
         inputName,
@@ -423,18 +439,22 @@ const Petmodal = (props) => {
     } catch (error) {
       console.log(error);
     }
+    }
   };
 
   const petUpdate = async () => {
-    console.log(
-      inputName,
-      inputGender,
-      inputType,
-      inputBreed,
-      inputBirth,
-      url,
-      inputSign
-    );
+  if (
+        !inputName ||
+        !inputGender ||
+        !inputType ||
+        !inputBreed ||
+        !inputAge ||
+        !inputSign ||
+        !inputType
+      ) {
+        alert("모든 항목을 입력해주세요.");
+        return; // 빈 값이 있을 경우 함수 종료
+      } else {
     try {
       const rsp = await AxiosApi.petUpdate(
         id,
@@ -457,6 +477,7 @@ const Petmodal = (props) => {
       }
     } catch (error) {
       console.log(error);
+    }
     }
   };
 
@@ -516,7 +537,13 @@ const Petmodal = (props) => {
                   marginRight: "20px",
                 }}
               >
-                <div style={{ display: "flex", flexDirection: "row" }}>
+                <div
+                    style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    }}
+                >
                   <Exist1>
                     <PetProfile src={img}></PetProfile>
                     <div style={{ textAlign: "center", fontSize: "18px" }}>
