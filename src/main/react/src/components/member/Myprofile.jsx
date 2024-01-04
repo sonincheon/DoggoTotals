@@ -8,7 +8,7 @@ import AxiosApi from "../../api/Axios";
 import profile from "../../img/profile2.png";
 
 const BoxContent = styled.div`
-  border-radius: 10px;
+  border-radius: 8px;
   min-height: 850px;
 `;
 
@@ -36,7 +36,7 @@ const BoxContent2 = styled.div`
 
 const Btn = styled.button`
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 15px;
   color: white;
   background-color: #333333;
@@ -89,7 +89,7 @@ const InputBox = styled.div`
 const Input = styled.div`
   width: 72%;
   height: 5vh;
-  border-radius: 10px;
+  border-radius: 8px;
   margin-right: 5px;
   display: flex;
   align-items: center;
@@ -114,7 +114,7 @@ const Input = styled.div`
 const InputContainer = styled.div`
   width: 72%;
   height: 5vh;
-  border-radius: 10px;
+  border-radius: 8px;
   margin-right: 5px;
   display: flex;
   align-items: center;
@@ -148,7 +148,7 @@ const Btn2 = styled.button`
   width: 80%;
   height: 5vh;
   min-height: 40px;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 17px;
   font-weight: bold;
   color: white;

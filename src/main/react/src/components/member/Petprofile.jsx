@@ -7,7 +7,7 @@ import petprofile from "../../img/petprofile2.png";
 
 const BoxContent = styled.div`
   /* min-width: 400px; */
-  border-radius: 10px;
+  border-radius: 8px;
   overflow-y: scroll;
   overflow-x: hidden;
   height: 87vh;
@@ -41,7 +41,7 @@ const BoxContent1 = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
-  border-radius: 10px;
+  border-radius: 8px;
   justify-content: space-between;
   padding: 10px;
   padding: 1rem;
@@ -70,7 +70,7 @@ const PetProfile = styled.img`
 
 const PetInfo1 = styled.div`
   position: relative;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 10px 14px 10px 20px;
   display: flex;
   flex-direction: row;
@@ -110,7 +110,7 @@ const PetInfo3 = styled.div`
 
 const Btn = styled.button`
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 15px;
   color: white;
   background-color: #333333;

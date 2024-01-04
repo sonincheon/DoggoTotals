@@ -16,7 +16,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-evenly;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
+  border-radius: 8px;
 
   .Enter {
     width: 400px;
@@ -26,7 +26,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    border-radius: 10px;
+    border-radius: 8px;
 
     @media (max-width: 1280px) {
       width: 350px;
@@ -56,18 +56,6 @@ const Container = styled.div`
     margin-top: 2rem;
     cursor: pointer;
   }
-`;
-const Hint = styled.div`
-  width: 60%;
-  height: 10px;
-  text-align: right;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  white-space: nowrap;
-
-  padding: 2px;
 `;
 
 const Items = styled.div`
@@ -137,7 +125,7 @@ const Input = styled.input`
   padding: 0.8em 0.5em; /* 원하는 여백 설정, 상하단 여백으로 높이를 조절 */
   font-family: inherit; /* 폰트 상속 */
   border: 1px solid #999;
-  border-radius: 12px; /* iSO 둥근모서리 제거 */
+  border-radius: 8px; /* iSO 둥근모서리 제거 */
   outline-style: none; /* 포커스시 발생하는 효과 제거를 원한다면 */
 `;
 
@@ -154,7 +142,7 @@ const Button1 = styled.button`
   background-color: #333333;
   font-size: 20px;
   font-weight: 400;
-  border-radius: 12px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
   font-family: inherit;
@@ -176,7 +164,7 @@ const Button2 = styled.button`
     height: 45px;
     color: black;
     background-image: url(${kakaoLogin});
-    border-radius: 12px;
+    border-radius: 8px;
     border: none;
     cursor: pointer;
     background-size: cover; /* 이미지를 버튼에 맞게 늘리거나 축소함 */
@@ -308,15 +296,6 @@ const Login = () => {
                 onChange={onChangeEmail}
               />
             </Items>
-            {/* 
-          <Hint>
-            {inputEmail.length > 0 && (
-              <span className={`${isId ? "success" : "error"}`}>
-                {idMessage}
-              </span>
-            )}
-          </Hint> */}
-
             <Items className="item2">
               <Input
                 type="password"
@@ -325,13 +304,6 @@ const Login = () => {
                 onChange={onChangePw}
               />
             </Items>
-            {/* <Hint>
-            {inputPw.length > 0 && (
-              <span className={`${isPw ? "success" : "error"}`}>
-                {pwMessage}
-              </span>
-            )}
-          </Hint> */}
             <Button1 onClick={onClickLogin}>로그인</Button1>
           </form>
           <Button2 onClick={handleLogin}></Button2>

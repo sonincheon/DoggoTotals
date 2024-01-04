@@ -140,7 +140,7 @@ const Change2 = styled.input`
   width: 300px;
   height: 25px;
   text-justify: center;
-  border-radius: 10px;
+  border-radius: 8px;
   margin-left: 20px;
 `;
 
