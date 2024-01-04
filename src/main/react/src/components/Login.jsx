@@ -262,7 +262,13 @@ const Login = () => {
       if (res.data.grantType === "Bearer") {
         Common.setAccessToken(res.data.accessToken);
         Common.setRefreshToken(res.data.refreshToken);
-        navigate("/");
+        if(inputEmail==="admin"){
+          navigate("/ad")
+        } else {
+          navigate("/");
+        };
+
+
       } else {
         setModalOpen(true);
         setModalContent("아이디 및 패스워드를 재확인해 주세요.^^");

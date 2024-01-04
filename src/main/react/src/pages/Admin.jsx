@@ -83,7 +83,7 @@ const Admin = () => {
   const [ activeMenu, setActiveMenu ] = useState('');
 
   function handleClick(menu) {
-    navigate(`/admin/${menu}`);
+    navigate(`/ad/${menu}`);
     setActiveMenu(menu);
   }
 
