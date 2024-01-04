@@ -12,7 +12,7 @@ import ChatBotImg from "../../icon/ChatBot.png";
 // 다른 페이지와 다른 헤더 푸터 적용방식을 위한 스타일드 컴포넌트
 const GetOffHeader = styled.div`
     position: relative;
-    margin-top: -3vw;
+    margin-top: -3.3vw;
 
     @media (max-width: 768px) {
     position: static;
@@ -31,7 +31,7 @@ const SectionContainer = styled.section.withConfig({
   width: ${(props) => props.$width || "98vw"};
   height: ${(props) => props.$height || "50vw"};
   background-color: ${(props) => props.$backGround || "white"};
-  
+
   @media (max-width: 768px) {
     height: 110vw;
     /* margin-top: -30px; */
@@ -124,8 +124,8 @@ const ToggleButton = styled.div`
   border-radius: 50%;
   position: absolute;
   box-shadow: 2px 4px 15px 3px rgba(0, 0, 0, 0.2);
-  
-  transition: all 0.4s ease-in-out !important; 
+
+  transition: all 0.4s ease-in-out !important;
   left: ${(props) => (props.isOn ? "30px" : "0")};
 `;
 
@@ -170,7 +170,6 @@ const HomeMain = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
 
   return (
     <GetOffHeader>

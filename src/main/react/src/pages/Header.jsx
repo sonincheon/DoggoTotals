@@ -363,6 +363,7 @@ const Header = () => {
   useEffect(() => {
       const handleResize = () => setIsMobile(window.innerWidth <= 768);
       window.addEventListener("resize", handleResize);
+      handleResize(); // 초기 실행
       return () => window.removeEventListener("resize", handleResize);
     }, []);
 
@@ -467,13 +468,9 @@ const Header = () => {
         onMouseLeave={() => setIsHeaderHovered(false)}
         $isHovered={isHeaderHovered}
       >
-        <Menu
-                  $isHovered={isHeaderHovered}
-                  onClick={() => navigate("/about")}
-                  style={{ display: isMobile ? "none" : "flex" }} // 모바일일 때 숨김
-                >
-                  ABOUT US
-                </Menu>
+        <Menu $isHovered={isHeaderHovered} onClick={() => navigate("/about")}>
+          ABOUT US
+        </Menu>
         <Menu $isHovered={isHeaderHovered} onClick={() => navigate("/diy")}>
           PET'S DIARY
         </Menu>
