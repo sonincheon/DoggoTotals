@@ -151,6 +151,9 @@ const Menu = styled.p`
   &:hover {
     border-bottom: 3px solid #f95001;
   }
+  @media (max-width: 768px) {
+      display: none; /* 모바일 화면에서 메뉴 숨김 */
+    }
 `;
 
 const Contain = styled.div`
@@ -301,6 +304,7 @@ const Header = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState("");
   const [email, setEmail] = useState("");
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const closeModal = () => {
     setModalOpen(false);
@@ -355,6 +359,12 @@ const Header = () => {
     setEmail("");
     alert("로그아웃 되셨습니다.");
   };
+
+  useEffect(() => {
+      const handleResize = () => setIsMobile(window.innerWidth <= 768);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
   return (
     <Container>
@@ -420,6 +430,11 @@ const Header = () => {
             <CloseIcon sx={{ fontSize: 35 }} />
           </div>
         </div>
+        {!isMobile && (
+        <div className="list1" onClick={() => navigate("/about")}>
+          ABOUT US
+        </div>
+        )}
         <div className="list1" onClick={() => navigate("/diy")}>
           PET'S DIARY
         </div>
@@ -452,6 +467,13 @@ const Header = () => {
         onMouseLeave={() => setIsHeaderHovered(false)}
         $isHovered={isHeaderHovered}
       >
+        <Menu
+                  $isHovered={isHeaderHovered}
+                  onClick={() => navigate("/about")}
+                  style={{ display: isMobile ? "none" : "flex" }} // 모바일일 때 숨김
+                >
+                  ABOUT US
+                </Menu>
         <Menu $isHovered={isHeaderHovered} onClick={() => navigate("/diy")}>
           PET'S DIARY
         </Menu>
