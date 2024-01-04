@@ -51,16 +51,12 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   // 로딩상태 관리
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
+  const [allowAbout, setAllowAbout] = useState(window.innerWidth > 768);
 
-  useEffect(() => {
-    function handleResize() {
-      setIsMobileView(window.innerWidth <= 768);
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    useEffect(() => {
+      // 화면 크기에 따라 about 페이지 허용 여부 결정
+      setAllowAbout(window.innerWidth > 768);
+    }, []);
 
   return (
     <>
@@ -94,8 +90,8 @@ function App() {
                   <Route path="/serviceVeiw" element={<ServiceView />} />
                 </Route>
                 <Route path="/" element={<HomePage />} />
-                {!isMobileView && (
-                  <Route path="/about" element={<AboutPage />} />
+                {allowAbout && (
+                 <Route path="/about" element={<AboutPage />} />
                 )}
                 <Route path="/book" element={<BookPage />} />
                 <Route path="/diy" element={<Diymain />} />

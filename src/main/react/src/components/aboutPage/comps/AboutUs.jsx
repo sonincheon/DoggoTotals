@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckDouble } from "@fortawesome/free-solid-svg-icons";
 import goldenRetriver from "../../../img/homePageImages/aboutUs/goldenRetriver.png";
@@ -47,7 +47,7 @@ const TextContainer = styled.div.attrs({
     color: #65c178;
   }
   h1 {
-    font-size: 3.2vw;
+    font-size: 3.1vw;
   }
   .text-primary {
     color: #ed6436;
@@ -88,7 +88,7 @@ const TextLine = styled.div`
   }
 `;
 
-const LearnMoreButton = styled.a`
+const LearnMoreButton = styled.button`
   display: flex; // Flex 컨테이너로 설정
   align-items: center; // 자식 요소들을 수직 중앙으로 정렬
   justify-content: center; // 자식 요소들을 수평 중앙으로 정렬
@@ -161,6 +161,11 @@ const StyledImageHalf = styled.img`
 `;
 
 const AboutUs = () => {
+
+const navigate = useNavigate();
+const handleLearnMoreClick = () => {
+    navigate('/login'); // '/login' 경로로 이동
+  };
   return (
     <ItemBox>
       <Items $align="none" $padding="none" $width="50%" $padding_top="2.9vw">
@@ -169,39 +174,38 @@ const AboutUs = () => {
         </TextContainer>
         <TextContainer $height="20%">
           <h1>
-            <span className="text-primary">소개글</span> &amp;{" "}
-            <span className="text-secondary">소개글</span>
+            <span className="text-primary">반려동물</span>과{" "}
+            <span className="text-secondary">동행</span>
           </h1>
         </TextContainer>
         <TextContainer $height="15%">
           <h3>
-          강아지 고양이 강아지 고양이 강아지 고양이 강아지 고양이 강아지 고양이 강아지 고양이 강아지 고양이 강아지 고양이 
-          강아지 고양이 강아지 고양이 강아지 고양이 강아지 
+           당신과 반려동물의 동행을 위한, 스마트한 솔루션을 제공합니다.<br/>
+           우리의 기술로 반려동물과의 시간이 더욱 특별해집니다.
           </h3>
         </TextContainer>
         <TextContainer $height="15%">
           <p>
-          Dolores lorem lorem ipsum sit et ipsum. Sadip sea amet diam dolore sed
-          et. Sit rebum labore sit sit ut vero no sit. Et elitr stet dolor sed
-          sit et sed ipsum et kasd ut. Erat duo eos et erat sed diam duo
+          저희 앱은 단순한 관리를 넘어서, 반려동물과 깊이 있는 관계를 만들어갈 수 있도록 개발되었습니다.
+          매 순간 최적의 정보와 서비스를 제공함으로써, 당신과 반려동물의 삶에 기쁨과 행복을 가져다줍니다.
           </p>
         </TextContainer>
         <TextContainer $height="19.5%" $direction="column" $justify="center">
           <TextLine>
           <StyledFontAwesomeIcon icon={faCheckDouble} />
-            <p>주말에 깃업데이트좀 하세요</p>
+            <p>매일을 더욱 편리하게</p>
           </TextLine>
           <TextLine>
           <StyledFontAwesomeIcon icon={faCheckDouble} />
-            <p>어떠한 기능들을 </p>
+            <p>지속적인 업데이트</p>
           </TextLine>
           <TextLine>
           <StyledFontAwesomeIcon icon={faCheckDouble} />
-            <p>24/7 자고싶군요</p>
+            <p>합리적인 구독 서비스</p>
           </TextLine>
         </TextContainer>
         <TextContainer $height="10%">
-          <LearnMoreButton>더보기</LearnMoreButton>
+          <LearnMoreButton onClick={handleLearnMoreClick}>더보기</LearnMoreButton>
         </TextContainer>
       </Items>
 

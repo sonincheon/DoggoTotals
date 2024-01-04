@@ -84,12 +84,15 @@ const TextLine = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  h3 {
+    font-size: 2vw;
 
+  }
   p {
-    font-size: 1.3vw;
-    font-weight: bold;
-    margin-left: 1vw;
-    color: #181818;
+    font-size: 1.1vw;
+
+
+    color: #6c757d;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   }
 `;
@@ -114,7 +117,7 @@ const AboutFunctions = () => {
             <TextLine>
               <h1>
                 <span className="text-primary">애완동물을</span>{" "}
-                <span>위한 최고의 기능들</span>
+                <span>위한 최고의 서비스들</span>
               </h1>
             </TextLine>
           </TextContainer>
@@ -122,23 +125,35 @@ const AboutFunctions = () => {
         <Items $height="40%" $direction="row" $justify="space-between">
           <ItemContainer>
             <StyledImage src={schedule} alt="Schedule" />
+            <TextLine><h3>캘린더 일정관리</h3></TextLine>
+            <TextLine><p>소중한 순간들을 확인하세요</p></TextLine>
           </ItemContainer>
           <ItemContainer>
             <StyledImage src={mapService} alt="Map Service" />
+            <TextLine><h3>반려동물 동반 시설정보</h3></TextLine>
+            <TextLine><p>함께 여정을 계획해보세요</p></TextLine>
           </ItemContainer>
           <ItemContainer>
             <StyledImage src={weatherService} alt="Weather Service" />
+            <TextLine><h3>실시간 산책지수</h3></TextLine>
+            <TextLine><p>날씨정보 반영 실시간 산책지수</p></TextLine>
           </ItemContainer>
         </Items>
         <Items $height="40%" $direction="row" $justify="space-between">
           <ItemContainer>
             <StyledImage src={feed} alt="Feed" />
+            <TextLine><h3>반려동물을 위한 식사</h3></TextLine>
+            <TextLine><p>반려동물을 위한 최고의 선택</p></TextLine>
           </ItemContainer>
           <ItemContainer>
             <StyledImage src={searchAnimal} alt="Search Animal" />
+            <TextLine><h3>견종 & 묘종 도감</h3></TextLine>
+            <TextLine><p>궁금한 정보들을 확인하세요</p></TextLine>
           </ItemContainer>
           <ItemContainer>
             <StyledImage src={stray} alt="Stray" />
+            <TextLine><h3>유기동물 정보</h3></TextLine>
+            <TextLine><p>소중한 가족이 되어주세요</p></TextLine>
           </ItemContainer>
         </Items>
       </ItemBox>
