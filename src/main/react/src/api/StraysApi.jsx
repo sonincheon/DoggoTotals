@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = 'http://localhost:8111/api/stray';
+const BASE_URL = '/api/stray';
 
 // 이거는 파이썬 크롤러로 긁어서 db에 박아놓은 데이터들을 가져오는 api
 export const StrayAxiosApi = {

@@ -225,8 +225,7 @@ const KakaoMap = () => {
           style={{
           width:"100%",
           height:"70vh"
-//             width: "100vw",
-//             height: "70vh",
+
           }}
           level={3}
           onCreate={setMap} // 지도가 생성될 때 setMap 함수를 호출해 지도 객체 업데이트 추가

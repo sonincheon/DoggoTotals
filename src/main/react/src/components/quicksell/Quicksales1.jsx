@@ -3,9 +3,7 @@ import { useState, useEffect } from "react";
 import Modal from "../../utill/Modal";
 import { useNavigate } from "react-router-dom";
 import AxiosApi from "../../api/Axios";
-import Salesmodal from "../../utill/Salesmodal";
-import Common from "../../utill/Common";
-import Usermodal from "../../utill/Usermodal";
+import AddrModal from "../../utill/AddrModal";
 
 const Container = styled.div`
   width: 80%;
@@ -165,7 +163,7 @@ const CancleButton = styled.button`
 const Quicksale1 = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
-  const [sModalOpen, setSModalOpen] = useState(true);
+  const [sModalOpen, setSModalOpen] = useState(false);
   const [saleList, setSaleList] = useState([]);
   const [saleNum, setSaleNum] = useState();
 
@@ -191,15 +189,6 @@ const Quicksale1 = () => {
   };
 
 
-  const SalesModify = async () => {
-    const resp = await AxiosApi.SaleModify(saleNum);
-    if (resp.data === true) {
-      alert("변경확인");
-      setSModalOpen(false);
-    } else {
-      alert("변경실패");
-    }
-  };
   useEffect(() => {
     const SalesList = async () => {
       try {
@@ -214,6 +203,11 @@ const Quicksale1 = () => {
     };
     SalesList();
   }, [modalOpen]);
+
+  const changeClick =(num)=>{
+    setSModalOpen(true);
+    setSaleNum(num);
+  }
 
   return (
     <>
@@ -265,9 +259,9 @@ const Quicksale1 = () => {
                     </th>
                     <th style={{
                         width: "18%",
-                        display:"flex", justifyContent:"start"}}> 송장번호:{data.invoice} 상태:{data.orderStatus}</th>
+                        display:"flex", justifyContent:"start"}}>{data.invoice}</th>
                     <th style={{ width: "15%", display:"flex", justifyContent:"start"}}>
-                      <CancleButton style={{ backgroundColor: "#F95001" }}>
+                      <CancleButton onClick={() => changeClick(data.saleId)} style={{ backgroundColor: "#F95001" }}>
                         변경
                       </CancleButton>
                       <CancleButton onClick={() => CancleClick(data.saleId)}>
@@ -301,11 +295,10 @@ const Quicksale1 = () => {
       >
         정말 취소 요청 하시겠습니까?
       </Modal>
-      <Usermodal     
-        type={1}
-        open={sModalOpen}
-        name="배송지"
-        close={closeModal}
+        <AddrModal
+          open={sModalOpen}
+          close={closeModal}
+          saleNum={saleNum}
         />
 
     </>

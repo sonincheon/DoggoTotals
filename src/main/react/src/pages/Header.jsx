@@ -151,9 +151,7 @@ const Menu = styled.p`
   &:hover {
     border-bottom: 3px solid #f95001;
   }
-  @media (max-width: 768px) {
-      display: none; /* 모바일 화면에서 메뉴 숨김 */
-    }
+
 `;
 
 const Contain = styled.div`
@@ -468,9 +466,11 @@ const Header = () => {
         onMouseLeave={() => setIsHeaderHovered(false)}
         $isHovered={isHeaderHovered}
       >
+      {!isMobile && (
         <Menu $isHovered={isHeaderHovered} onClick={() => navigate("/about")}>
-          ABOUT US
+         ABOUT US
         </Menu>
+         )}
         <Menu $isHovered={isHeaderHovered} onClick={() => navigate("/diy")}>
           PET'S DIARY
         </Menu>

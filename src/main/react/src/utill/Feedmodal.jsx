@@ -292,7 +292,7 @@ const Feedmodal = (props) => {
       );
       if (res.data === true) {
         alert("등록 성공");
-        navigate("/admin/feed");
+        navigate("/ad/feed");
         setUrl("");
         reRender();
         close();
@@ -326,7 +326,7 @@ const Feedmodal = (props) => {
       );
       if (res.data === true) {
         alert("등록 성공");
-        navigate("/admin/feed");
+        navigate("/ad/feed");
         setUrl("");
         reRender();
         close();

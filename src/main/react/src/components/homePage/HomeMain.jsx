@@ -12,7 +12,7 @@ import ChatBotImg from "../../icon/ChatBot.png";
 // 다른 페이지와 다른 헤더 푸터 적용방식을 위한 스타일드 컴포넌트
 const GetOffHeader = styled.div`
     position: relative;
-    margin-top: -3.3vw;
+    margin-top: -3.5vw;
 
     @media (max-width: 768px) {
     position: static;
@@ -28,13 +28,28 @@ const SectionContainer = styled.section.withConfig({
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: ${(props) => props.$width || "98vw"};
-  height: ${(props) => props.$height || "50vw"};
+  width: ${(props) => props.$width || "97.8vw"};
+  height: ${(props) => props.$height || "52vw"};
   background-color: ${(props) => props.$backGround || "white"};
+
+  @media (max-width: 1500px) {
+
+    width: 97.5vw;
+  }
+
+  @media (max-width: 1200px) {
+
+    width: 97.2vw;
+  }
+
+  @media (max-width: 1000px) {
+
+    width: 96.8vw;
+  }
 
   @media (max-width: 768px) {
     height: 110vw;
-    /* margin-top: -30px; */
+    width: 93vw;
   }
 `;
 
