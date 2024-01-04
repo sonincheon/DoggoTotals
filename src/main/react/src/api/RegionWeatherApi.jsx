@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BASE_URL = "http://localhost:8111/api/weather";
+const BASE_URL = "/api/weather";
 
 // 이거는 db에 처 박아둔 각 지역별 일주일 날씨 ..
 

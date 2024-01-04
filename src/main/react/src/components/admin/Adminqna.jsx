@@ -49,7 +49,7 @@ const Adminqna = () => {
 
 
   const handleQnaDetail = (id) => {
-    navigate(`/admin/qna/${id}`);
+    navigate(`/ad/qna/${id}`);
   };
 
   const formatDate = (dateString) => {

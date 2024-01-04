@@ -2,7 +2,7 @@ import axios from "axios";
 import Common from "../utill/Common";
 import AxiosInstance from "../utill/AxiosInstance";
 
-const MUNG_HOST = "http://localhost:8111";
+const MUNG_HOST = "";
 
 
 const AdminAxiosApi = {

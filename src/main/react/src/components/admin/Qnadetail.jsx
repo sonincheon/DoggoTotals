@@ -40,6 +40,18 @@ const QnaBoard = styled.div`
     padding: 20px 10px;
     overflow-wrap: anywhere;
     border-bottom: 1px solid #999999;
+    overflow: hidden;
+
+    & > div {
+      margin: 20px auto;
+      text-align: center;
+
+      & > img {
+        width: 70%;
+        max-width: 540px;
+        min-width: 180px;
+      }
+    }
   }
   .answerBox {
     position: relative;
@@ -165,6 +177,7 @@ const Qnadetail = () => {
             </div>
             <div className="QuestionDetail">
               <p>{detailQna.comment}</p>
+              <div><img src={detailQna.boardImg} alt="문의이미지" /></div>
             </div>
             <div className="answerBox">
               <div className="uploadedAnswer">

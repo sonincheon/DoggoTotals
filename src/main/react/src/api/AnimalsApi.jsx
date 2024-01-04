@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = 'http://localhost:8111/api';
+const BASE_URL = '/api';
 
 // 동물도감 리스트 가져오기
 export const getAnimals = async (animalType, page, size) => {
