@@ -274,7 +274,7 @@ const Login = () => {
   };
 
   const Rest_api_key = "afb202ab4753ffdab4ab8549b0395416"; //REST API KEY
-  const redirect_uri = "http://localhost:8111/auth"; //Redirect URI
+  const redirect_uri = "http://www.petmemoir.store/auth"; //Redirect URI
   // oauth 요청 URL
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 
