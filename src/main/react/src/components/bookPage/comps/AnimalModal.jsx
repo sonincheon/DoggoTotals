@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const ModalOverlay = styled.div`
   display: ${(props) => (props.$isOpen ? "flex" : "none")};
@@ -12,7 +12,7 @@ const ModalOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 1000;
 `;
 
 const ModalContent = styled.div`
@@ -21,17 +21,29 @@ const ModalContent = styled.div`
   padding: 20px;
   border-radius: 8px;
   display: flex;
+
   width: 70vw;
   height: 35vw;
   z-index: 99999;
+
+  @media (max-width: 768px) {
+    width: 80vw;
+    height: 100vw;
+    flex-direction: column;
+  }
 `;
 
 const ImageSection = styled.div`
-  width: 50%;
+  width: 90%;
   height: 99%;
   background: url(${(props) => props.src}) no-repeat center center;
   background-size: cover;
   border-radius: 8px;
+  box-shadow: 2px 4px 15px 3px rgba(0, 0, 0, 0.2);
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 50%;
+  }
 `;
 
 const ContentSection = styled.div`
@@ -43,12 +55,9 @@ const ContentSection = styled.div`
   height: 100%;
   padding-left: 2%;
 
-  h1 {
-    font-size: 2vw;
-  }
-  h2 {
-    font-size: 1.5vw;
-    color: #a3a1a1;
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 50%;
   }
 `;
 
@@ -64,9 +73,22 @@ export const BreedNameSection = styled.div`
     font-size: 2vw;
   }
   h2 {
-    margin-top: 5%;
     font-size: 1.5vw;
     color: #a3a1a1;
+  }
+
+  @media (max-width: 768px) {
+    
+    align-items: center;
+    margin-top: 1%;
+    height: 10%;
+    h1 {
+      font-size: 5vw;
+    }
+    h2 {
+      font-size: 4vw;
+      color: #a3a1a1;
+    }
   }
 `;
 
@@ -77,6 +99,14 @@ export const BreedInfoSection = styled.div`
   justify-content: space-around;
   width: 100%;
   height: 80%;
+
+  @media (max-width: 768px) {
+    
+    
+    margin-top: 5%;
+   
+
+  }
 `;
 
 const CloseButton = styled.button`
@@ -87,6 +117,13 @@ const CloseButton = styled.button`
   border: none;
   font-size: 24px;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    
+    top: 1px;
+    right: 1px;
+    
+  }
 `;
 
 const ProgressBarContainer = styled.div`
@@ -99,29 +136,45 @@ const ProgressBar = styled.div`
   background-color: #4caf50;
   height: 100%;
   border-radius: 8px;
-  width: ${(props) =>
-    (props.value / 5) * 100}%; // 1~5 범위의 값을 100% 기준으로 변환
+  transition: width 1.5s ease-in-out;
+  @media (max-width: 768px) {
+    height: 150%;
+  }
 `;
+
 
 const ProgressLabel = styled.span`
   font-size: 1.5vw;
+  @media (max-width: 768px) {
+    font-size: 4vw; // 화면 너비가 768px 이하일 때 폰트 크기 조정
+  }
 `;
 
 export const AnimalAttributeBar = ({ label, value }) => {
+  const [barWidth, setBarWidth] = useState(0);
+
+  useEffect(() => {
+    // 컴포넌트가 마운트된 후에 프로그레스 바의 너비를 설정합니다
+    const timeoutId = setTimeout(() => {
+      setBarWidth((value / 5) * 100); // value 값을 백분율로 변환
+    }, 100); // 지연 시간을 조절할 수 있습니다
+
+    return () => clearTimeout(timeoutId);
+  }, [value]);
+  
   return (
     <>
       <ProgressLabel>{label}</ProgressLabel>
       <ProgressBarContainer>
-        <ProgressBar value={value} />
+      <ProgressBar style={{ width: `${barWidth}%` }} />
       </ProgressBarContainer>
     </>
   );
 };
 
 const AnimalModal = ({ $isOpen, $onClose, imageSrc, children }) => {
-  
   // esc 누르면 모달창 종료
-    useEffect(() => {
+  useEffect(() => {
     const handleEsc = (event) => {
       if (event.keyCode === 27) {
         $onClose();

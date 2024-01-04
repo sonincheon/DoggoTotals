@@ -34,7 +34,7 @@ const BreedItemsBox = styled.div`
   width: 100%;
   height: auto;
   min-height: 500px;
-  border: 1px solid black;
+  
   border-radius: 10px;
   padding: 10px;
 `;
@@ -78,14 +78,25 @@ const BreedItem = styled.div`
     padding-bottom: 0.5vw;
     color: #a3a1a1;
   }
+  @media (max-width: 768px) {
+    width: calc(50% - 20px); // 너비 조정 (화면이 좁을 때)
+    height: 40vw;
+    h3{
+      font-size: 12px;
+    }
+    p {
+      font-size: 10px;
+    }
+  }
 `;
 
-const AnimalList = ({ animalType, searchQuery }) => {
+const AnimalList = ({ animalType, searchQuery, setSearchQuery }) => {
   const [animals, setAnimals] = useState([]);
   const [page, setPage] = useState(0);
   const loader = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAnimal, setSelectedAnimal] = useState(null);
+  
 
   // animalType이 변경될 때 첫 페이지 데이터 로딩
   useLayoutEffect(() => {
@@ -126,11 +137,25 @@ const AnimalList = ({ animalType, searchQuery }) => {
       const fetchSearchedAnimals = async () => {
         const searchedAnimals = await getSearchedAnimals(animalType, searchQuery);
         setAnimals(searchedAnimals);
+  
+        // 검색 결과가 비어있는 경우 경고창 표시 및 초기화
+        if (searchedAnimals.length === 0) {
+          alert("해당하는 품종이 없습니다. 다른 검색어를 시도해보세요.");
+          loadInitialData();
+        }
       };
-
+  
       fetchSearchedAnimals();
     }
   }, [searchQuery, animalType]);
+
+  // 해당하는 품종이 없다는 경고 발생시 실행되는 함수
+  const loadInitialData = async () => {
+    const newAnimals = await getAnimals(animalType, 0, 20);
+    setAnimals(newAnimals);
+    setPage(0); // 페이지 번호를 초기화
+    setSearchQuery("");
+  };
 
   // 스크롤 이벤트 핸들러 및 Intersection Observer 설정
   const handleObserver = (objects) => {

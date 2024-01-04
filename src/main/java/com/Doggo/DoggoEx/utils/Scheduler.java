@@ -1,6 +1,8 @@
 package com.Doggo.DoggoEx.utils;
 
 
+import com.Doggo.DoggoEx.entity.AnimalType;
+import com.Doggo.DoggoEx.repository.AnimalTypeRepository;
 import com.Doggo.DoggoEx.service.animals.StrayService;
 import com.Doggo.DoggoEx.service.weather.CompleteWeatherService;
 import com.Doggo.DoggoEx.service.weather.MiddleWeatherService;
@@ -28,34 +30,37 @@ public class Scheduler {
 
     private final StrayService strayService;
 
+    private final AnimalTypeRepository animalTypeRepository;
 
 
     public Scheduler(MiddleWeatherService middleWeatherService,
                      ShortWeatherService shortWeatherService,
                      CompleteWeatherService completeWeatherService,
-                     WeatherDataSaveService weatherDataSaveService, StrayService strayService) {
+                     WeatherDataSaveService weatherDataSaveService, StrayService strayService, AnimalTypeRepository animalTypeRepository) {
 
         this.middleWeatherService = middleWeatherService;
         this.shortWeatherService = shortWeatherService;
         this.completeWeatherService = completeWeatherService;
         this.weatherDataSaveService = weatherDataSaveService;
         this.strayService = strayService;
+        this.animalTypeRepository = animalTypeRepository;
     }
 
 
-//    @PostConstruct
-//    public void init() {
-//        // 서비스 시작 시 한 번 실행할 작업
-//        try {
+    @PostConstruct
+    public void init() {
+        // 서비스 시작 시 한 번 실행할 작업
+        try {
+            animalTypeRepository.insertIfNotExist(1L, AnimalType.AnimalTypes.DOG);
+            animalTypeRepository.insertIfNotExist(2L, AnimalType.AnimalTypes.CAT);
 //            executeWeatherTasks();
-////            executeStrayTasks();
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        } catch (Exception e) {
-//            // 다른 예외에 대한 처리
-//            e.printStackTrace();
-//        }
-//    }
+//            executeStrayTasks();
+
+        } catch (Exception e) {
+            // 다른 예외에 대한 처리
+            e.printStackTrace();
+        }
+    }
 
 
     // 초 분 시 일 월 요일

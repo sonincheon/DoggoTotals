@@ -9,9 +9,9 @@ const SectionContainer = styled.section.withConfig({
 })`
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  
   align-items: center;
-  width: 100vw;
+  width: 95vw;
   min-height: 100vh;
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 `;
@@ -49,6 +49,7 @@ const BookMain = () => {
             animalType={animalType}
             page={page}
             searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
           />
         </ItemContainer>
       </SectionContainer>
