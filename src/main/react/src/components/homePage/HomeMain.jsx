@@ -9,6 +9,18 @@ import CurrentAddressContext from "./CurrentAddressContext";
 import Chatbot from "../service/ChatBot";
 import ChatBotImg from "../../icon/ChatBot.png";
 
+// 다른 페이지와 다른 헤더 푸터 적용방식을 위한 스타일드 컴포넌트
+const GetOffHeader = styled.div`
+    position: relative;
+    margin-top: -3vw;
+
+    @media (max-width: 768px) {
+    position: static;
+
+    }
+`
+
+
 const SectionContainer = styled.section.withConfig({
   className: "section-container",
 })`
@@ -156,7 +168,7 @@ const HomeMain = () => {
   }, []);
 
   return (
-    <>
+    <GetOffHeader>
       <CurrentAddressContext.Provider
         value={{ currentAddress, setCurrentAddress }}
       >
@@ -207,7 +219,7 @@ const HomeMain = () => {
           <Chatbot />
         </ChatbotBox>
       ) : null}
-    </>
+    </GetOffHeader>
   );
 };
 
