@@ -201,7 +201,6 @@ const Servicemodal = (props) => {
   const handleTextareaChange = (e) => {
     const textareaContent = e.target.value;
     setComment(textareaContent); // textarea 내용 저장
-    console.log(textareaContent);
   };
 
   const handleUploadClick = async () => {
@@ -245,7 +244,8 @@ const Servicemodal = (props) => {
         navigate("/service");
         close();
       } else {
-        console.log(rsp);
+        alert("문의글 수정 실패.");
+
       }
     } catch (error) {
       console.log(error);

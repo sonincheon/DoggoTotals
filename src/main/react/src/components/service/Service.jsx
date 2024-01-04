@@ -18,13 +18,12 @@ const Base = styled.div`
 const Container = styled.div`
   flex: 0 0 calc(50% - 40px); /* 컨테이너의 반응형 크기 설정 */
   max-width: calc(50% - 40px);
-
   .title {
-    font-size: 2rem;
+    font-size: 2.9rem;
     color: #f95001;
     padding: 0;
     hr {
-      border: solid 1.5px #f95001;
+      border: solid 1.4px #f95001;
     }
   }
 

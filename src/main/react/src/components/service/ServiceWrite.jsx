@@ -163,7 +163,6 @@ const ServiceWrite = () => {
 
   const handleTextareaChange = (event) => {
     const { value } = event.target;
-    console.log(value);
     if (value.length <= maxLength) {
       setComment(value);
     }
