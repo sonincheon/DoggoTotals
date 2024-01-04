@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useState, useEffect} from "react";
 import Login from "./components/Login";
 import Header from "./pages/Header";
 import AboutPage from "./pages/AboutPage";
@@ -36,11 +37,10 @@ import Loader from "./utill/Loader";
 import PrivateLayoutAdmin from "./pages/PrivateLayoutAdmin";
 import Adminanimal from "./components/admin/Adminanimal";
 
-
 const GlobalStyle = createGlobalStyle`
   ${reset}
-    
-  *{  
+
+  *{
     box-sizing : border-box;
   }
   body{
@@ -51,7 +51,16 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   // 로딩상태 관리
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
 
+  useEffect(() => {
+    function handleResize() {
+      setIsMobileView(window.innerWidth <= 768);
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <>
@@ -59,56 +68,56 @@ function App() {
       <PayStore>
         <GlobalStyle />
         <LoadingProvider>
-        <Router>
-        {/* <Loader/> */}
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/FindIdPwd" element={<FindIdPwd />} />
-            {/* 여긴 헤더 풋터 구간  */}
-            <Route element={<Header />}>
-              {/* 로그인 접속 제한 구간  */}
-              <Route element={<PrivateLayout />}>
-                <Route
-                  path="/quick/sell/:feedId/:title"
-                  element={<Quicksell />}
-                />
-                <Route
-                  path="/quick/tosspay/:feedName/:salesAddr/:salesAutoDelivery/:salesDelivery/:salesPrice/:title"
-                  element={<Quicktoss />}
-                />
-                <Route path="/quick/sales" element={<Quicksale />} />
-                <Route path="/quick/sucess/:num" element={<Quicksucess />} />
-                <Route path="/quick/toss" element={<TossPage />} />
-                <Route path="/mypage/" element={<MyPage />} />
-                <Route path="/serviceVeiw" element={<ServiceView />} />
+          <Router>
+            {/* <Loader/> */}
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/FindIdPwd" element={<FindIdPwd />} />
+              {/* 여긴 헤더 풋터 구간  */}
+              <Route element={<Header />}>
+                {/* 로그인 접속 제한 구간  */}
+                <Route element={<PrivateLayout />}>
+                  <Route
+                    path="/quick/sell/:feedId/:title"
+                    element={<Quicksell />}
+                  />
+                  <Route
+                    path="/quick/tosspay/:feedName/:salesAddr/:salesAutoDelivery/:salesDelivery/:salesPrice/:title"
+                    element={<Quicktoss />}
+                  />
+                  <Route path="/quick/sales" element={<Quicksale />} />
+                  <Route path="/quick/sucess/:num" element={<Quicksucess />} />
+                  <Route path="/quick/toss" element={<TossPage />} />
+                  <Route path="/mypage/" element={<MyPage />} />
+                  <Route path="/serviceVeiw" element={<ServiceView />} />
+                </Route>
+                <Route path="/" element={<HomePage />} />
+                {!isMobileView && (
+                  <Route path="/about" element={<AboutPage />} />
+                )}
+                <Route path="/book" element={<BookPage />} />
+                <Route path="/diy" element={<Diymain />} />
+                <Route path="/map" element={<Mapmain />} />
+                <Route path="/quick" element={<Quickmain />} />
+                <Route path="/service" element={<ServiceMain />} />
               </Route>
-              <Route path="/" element={<HomePage />} />
-              <Route path="about" element={<AboutPage />} />
-              <Route path="/book" element={<BookPage />} />
-              <Route path="/diy" element={<Diymain />} />
-              <Route path="/map" element={<Mapmain />} />
-              <Route path="/quick" element={<Quickmain />} />
-              <Route path="/service" element={<ServiceMain />} />
-            </Route>
 
-            {/* 여긴 어드민 구간  */}
-            <Route element={<PrivateLayoutAdmin />}>
-              <Route element={<Admin />}>
-                <Route path="/admin" element={<Adminmainpage />} />
-                <Route path="/admin/member" element={<Adminmemberpage />} />
-                <Route path="/admin/sales" element={<Adminsalespage />} />
-                <Route path="/admin/qna" element={<Adminqnapage />} />
-                <Route path="/admin/qna/:id" element={<Qnadetailpage />} />
-                <Route path="/admin/feed" element={<Adminfeedpage />} />
-                <Route path="/admin/animal" element={<Adminanimal />} />
+              {/* 여긴 어드민 구간  */}
+              <Route element={<PrivateLayoutAdmin />}>
+                <Route element={<Admin />}>
+                  <Route path="/admin" element={<Adminmainpage />} />
+                  <Route path="/admin/member" element={<Adminmemberpage />} />
+                  <Route path="/admin/sales" element={<Adminsalespage />} />
+                  <Route path="/admin/qna" element={<Adminqnapage />} />
+                  <Route path="/admin/qna/:id" element={<Qnadetailpage />} />
+                  <Route path="/admin/feed" element={<Adminfeedpage />} />
+                  <Route path="/admin/animal" element={<Adminanimal />} />
+                </Route>
               </Route>
-            </Route>
-            
-          </Routes>
-          
-        </Router>
+            </Routes>
+          </Router>
         </LoadingProvider>
       </PayStore>
     </>

@@ -1,10 +1,20 @@
+import styled from "styled-components";
+
+import {
+  sunny,
+  cloudy,
+  fullCloud,
+  rainy,
+  snowy,
+} from "../../../../img/weather";
+
 export const citiesData = [
   { name: "서울", gridRow: 6, gridColumn: 8 },
   { name: "춘천", gridRow: 5, gridColumn: 11 },
-  { name: "강릉", gridRow: 7, gridColumn: 14 },
+  { name: "강릉", gridRow: 7, gridColumn: 15 },
   { name: "수원", gridRow: 9, gridColumn: 9 },
   { name: "청주", gridRow: 10, gridColumn: 13 },
-  { name: "안동", gridRow: 14, gridColumn: 15 },
+  { name: "안동", gridRow: 13, gridColumn: 15 },
   { name: "전주", gridRow: 15, gridColumn: 9 },
   { name: "대전", gridRow: 13, gridColumn: 11 },
   { name: "대구", gridRow: 17, gridColumn: 12 },
@@ -12,8 +22,8 @@ export const citiesData = [
   { name: "목포", gridRow: 22, gridColumn: 6 },
   { name: "광주", gridRow: 20, gridColumn: 8 },
   { name: "여수", gridRow: 22, gridColumn: 10 },
-  { name: "부산", gridRow: 20, gridColumn: 15 },
-  { name: "제주", gridRow: 28, gridColumn: 7 },
+  { name: "부산", gridRow: 21, gridColumn: 15 },
+  { name: "제주", gridRow: 29, gridColumn: 7 },
 ];
 
 export const getCurrentDate = () => {
@@ -67,12 +77,55 @@ export const formatDateWithDay = (dateString) => {
   }
 };
 
+const CityContainer = styled.div`
+  margin: 0;
+  padding: 0;
+  grid-row: ${(props) => props.gridRow};
+  grid-column: ${(props) => props.gridColumn};
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1vw;
+  position: relative;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 3vw;
+  }
+`;
+
+const WeatherIcon = styled.img`
+  margin-top: -2.5vw;
+  width: 3vw !important;
+  height: 3vw !important;
+
+  @media (max-width: 768px) {
+    margin-top: -4vw;
+    width: 5vw !important;
+    height: 5vw !important;
+  }
+`;
+
+const CityName = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1vw; // 기본 폰트 크기
+  color: #000; // 기본 텍스트 색상
+
+  @media (max-width: 768px) {
+    font-size: 3vw; // 화면이 768px 이하일 때 폰트 크기
+  }
+`;
+
 export const CityComponent = ({ city, weather, isMorning }) => {
   const gridRow = city.gridRow;
   const gridColumn = city.gridColumn;
 
   if (!weather) {
-    return <div>Loading...</div>; // 또는 다른 오류 처리 , 나중에 멋진걸로 대체하자
+    return <div></div>; // 또는 다른 오류 처리
   }
 
   const temperature = isMorning
@@ -82,42 +135,34 @@ export const CityComponent = ({ city, weather, isMorning }) => {
     ? weather.morningWeatherCondition
     : weather.afternoonWeatherCondition; // 아침 OR 오후
 
+  let weatherIconSrc;
+  switch (weatherCondition) {
+    case "맑음":
+      weatherIconSrc = sunny;
+      break;
+    case "흐림":
+      weatherIconSrc = cloudy;
+      break;
+    case "구름많음":
+      weatherIconSrc = fullCloud;
+      break;
+    case "비":
+      weatherIconSrc = rainy;
+      break;
+    case "눈":
+      weatherIconSrc = snowy;
+      break;
+    default:
+      weatherIconSrc = cloudy;
+  }
+
   return (
-    <div
-      style={{
-        margin: 0,
-        padding: 0,
-        gridRow: gridRow,
-        gridColumn: gridColumn,
-        zIndex: 1,
-        whiteSpace: "nowrap",
-        fontSize: "0.8vw",
-        overflow: "visible",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-        fontSize: "1vw",
-      }}>
-      <div>
-        <div
-          // 추후 아이콘이 위치할거라 flex 적용 , 무조건 도시명+온도 표현식 정중앙에 위치
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column", // 세로 정렬
-            height: "100%", // 그리드 셀의 전체 높이 사용
-            width: "100%", // 그리드 셀의 전체 너비 사용
-          }}>
-          {`${weatherCondition}`}
-          <div>
-            {city.name}
-            {`${temperature}°`}
-          </div>
-          {/* <span>{weather ? `${weather.temperature}°C` : '온도'}</span> */}
-        </div>
-      </div>
-    </div>
+    <CityContainer gridRow={gridRow} gridColumn={gridColumn}>
+      <WeatherIcon src={weatherIconSrc} alt="Weather Icon" />
+      <CityName>
+        {city.name}
+        {`${temperature}°`}
+      </CityName>
+    </CityContainer>
   );
 };

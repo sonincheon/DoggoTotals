@@ -35,6 +35,7 @@ const Headers = styled.div`
     $isHovered ? "white" : "transparent"};
   transition: background-color 0.1s ease;
   @media (max-width: 768px) {
+    position: sticky; // 화면 크기가 768픽셀 이하일 때 position을 sticky로 설정
     height: 80px;
   }
 `;
@@ -301,6 +302,13 @@ const Header = () => {
   const [modalInfo, setModalInfo] = useState("");
   const [email, setEmail] = useState("");
 
+  // 홈페이지만 스크롤 10%에 해당하는 지점을 지나쳤을때 헤더가 등장하게 만드는 훅
+  const [showHeader, setShowHeader] = useState(false);
+  // 홈페이지만 768 px 이하일때 앞선 홈페이지 특수조건들 무효화 하는 훅
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  // 홈페이지에서 헤더가 한번 등장한뒤 계속 유지되게 만드는 훅
+  const [scrolled, setScrolled] = useState(false);
+
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -354,124 +362,182 @@ const Header = () => {
     setEmail("");
     alert("로그아웃 되셨습니다.");
   };
+  // 아래로 정벼리 수정영역
+  // 홈페이지는 10% 이상 스크롤해야 헤더가 등장하는데 모바일에서 그러면 안되니까 무효화하기 위해
+  // 해당 코드를 추가함
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  // 10% 이상 지나치면 헤더 등장하고 , 등장한뒤에는 유지하고
+  // 모바일일때는 다른 페이들과 동일하게 하는 이펙트훅
+  useEffect(() => {
+    const checkScroll = () => {
+      const threshold = window.innerHeight * 0.1;
+      if (window.scrollY > threshold) {
+        setShowHeader(true);
+        setScrolled(true);
+      } else if (!scrolled) {
+        setShowHeader(false);
+      }
+    };
+
+    if (isHomePage && !isMobile) {
+      window.addEventListener("scroll", checkScroll);
+    } else {
+      setShowHeader(true);
+      setScrolled(false);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", checkScroll);
+    };
+  }, [isHomePage, isMobile, scrolled]);
 
   return (
     <Container>
-      <Headers
-        onMouseEnter={() => setIsHeaderHovered(true)}
-        onMouseLeave={() => setIsHeaderHovered(false)}
-        $isHovered={isHeaderHovered}
-        $isHomePage={isHomePage}
-      >
-        <NavBox>
-          {email ? (
-            <div className="none" onClick={() => navigate("/mypage")}>
-              <h1>{email}<br/>환영합니다</h1>
+      {showHeader && (
+        <>
+          <Headers
+            onMouseEnter={() => setIsHeaderHovered(true)}
+            onMouseLeave={() => setIsHeaderHovered(false)}
+            $isHovered={isHeaderHovered}
+            $isHomePage={isHomePage}>
+            <NavBox>
+              {email ? (
+                <div className="none" onClick={() => navigate("/mypage")}>
+                  <h1>
+                    {email}
+                    <br />
+                    환영합니다
+                  </h1>
+                </div>
+              ) : (
+                <div className="none"></div>
+              )}
+              <Logo className="logo" onClick={() => navigate("/")} />
+              <div className="icons">
+                {email ? (
+                  <>
+                    <div className="icon" onClick={() => navigate("/mypage")}>
+                      <PermIdentityOutlinedIcon />
+                      <p>MYPAGE</p>
+                    </div>
+                    <div
+                      className="icon"
+                      onClick={() => navigate("/quick/sales")}>
+                      <ShoppingCartIcon />
+                      <p>Shoping</p>
+                    </div>
+                    <div className="icon" onClick={logOut}>
+                      <LoginRoundedIcon />
+                      <p>LogOut</p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="icon" onClick={() => navigate("/login")}>
+                      <LoginIcon />
+                      <p>LOGIN</p>
+                    </div>
+                    <div className="icon" onClick={() => navigate("/signup")}>
+                      <PersonAddAltOutlinedIcon />
+                      <p>SIGNUP</p>
+                    </div>
+                    <div className="icon" onClick={() => navigate("/mypage")}>
+                      <PermIdentityOutlinedIcon />
+                      <p>MYPAGE</p>
+                    </div>
+                  </>
+                )}
+
+                <div className="listIcon" onClick={() => clickList()}>
+                  <MenuOutlinedIcon sx={{ fontSize: 35 }} />
+                </div>
+              </div>
+            </NavBox>
+          </Headers>
+          <List $isList={openList} onClick={ListDown}>
+            <div className="list">
+              <Logo width={130} onClick={() => navigate("/")} />
+              <div className="out" onClick={ListDown}>
+                <CloseIcon sx={{ fontSize: 35 }} />
+              </div>
             </div>
-          ) : (
-            <div className="none">
+            {!isMobile && (
+            <div className="list1" onClick={() => navigate("/about")}>
+              ABOUT US
+
             </div>
-          )}
-          <Logo className="logo" onClick={() => navigate("/")} />
-          <div className="icons">
-            {email ? (
-              <>
-                <div className="icon" onClick={() => navigate("/mypage")}>
-                  <PermIdentityOutlinedIcon />
-                  <p>MYPAGE</p>
-                </div>
-                <div className="icon" onClick={() => navigate("/quick/sales")}>
-                  <ShoppingCartIcon />
-                  <p>Shoping</p>
-                </div>
-                <div className="icon" onClick={logOut}>
-                  <LoginRoundedIcon />
-                  <p>LogOut</p>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="icon" onClick={() => navigate("/login")}>
-                  <LoginIcon />
-                  <p>LOGIN</p>
-                </div>
-                <div className="icon" onClick={() => navigate("/signup")}>
-                  <PersonAddAltOutlinedIcon />
-                  <p>SIGNUP</p>
-                </div>
-                <div className="icon" onClick={() => navigate("/mypage")}>
-                  <PermIdentityOutlinedIcon />
-                  <p>MYPAGE</p>
-                </div>
-              </>
             )}
-
-            <div className="listIcon" onClick={() => clickList()}>
-              <MenuOutlinedIcon sx={{ fontSize: 35 }} />
+            <div className="list1" onClick={() => navigate("/diy")}>
+              PET'S DIARY
             </div>
-          </div>
-        </NavBox>
-      </Headers>
-      <List $isList={openList} onClick={ListDown}>
-        <div className="list">
-          <Logo width={130} onClick={() => navigate("/")} />
-          <div className="out" onClick={ListDown}>
-            <CloseIcon sx={{ fontSize: 35 }} />
-          </div>
-        </div>
-        <div className="list1" onClick={() => navigate("/diy")}>
-          PET'S DIARY
-        </div>
-        <div className="list1" onClick={() => navigate("/map")}>
-          MAPS
-        </div>
-        <div className="list1" onClick={() => navigate("/book")}>
-          PET'S BOOKS
-        </div>
-        <div className="list1" onClick={() => navigate("/quick")}>
-          정기 구독
-        </div>
-        <div className="list1" onClick={() => navigate("/service")}>
-          고객지원 Q&A
-        </div>
-        <div className="list2">
-          <div className="icon" onClick={() => navigate("/login")}>
-            <p>LOGIN</p>
-          </div>
-          <div className="icon" onClick={() => navigate("/signup")}>
-            <p>SIGN UP</p>
-          </div>
-          <div className="icon" onClick={() => navigate("/mypage")}>
-            <p>MYPAGE</p>
-          </div>
-        </div>
-      </List>
-      <Menus
-        onMouseEnter={() => setIsHeaderHovered(true)}
-        onMouseLeave={() => setIsHeaderHovered(false)}
-        $isHovered={isHeaderHovered}
-      >
-        <Menu $isHovered={isHeaderHovered} onClick={() => navigate("/diy")}>
-          PET'S DIARY
-        </Menu>
-        <Menu $isHovered={isHeaderHovered} onClick={() => navigate("/map")}>
-          MAPS
-        </Menu>
-        <Menu
-          $isHovered={isHeaderHovered}
-          className="icon"
-          onClick={() => navigate("/book")}
-        >
-          PET'S BOOKS
-        </Menu>
-        <Menu $isHovered={isHeaderHovered} onClick={() => navigate("/quick")}>
-          정기 구독
-        </Menu>
-        <Menu $isHovered={isHeaderHovered} onClick={() => navigate("/service")}>
-          Q&A
-        </Menu>
-      </Menus>
-
+            <div className="list1" onClick={() => navigate("/map")}>
+              MAPS
+            </div>
+            <div className="list1" onClick={() => navigate("/book")}>
+              PET'S BOOKS
+            </div>
+            <div className="list1" onClick={() => navigate("/quick")}>
+              정기 구독
+            </div>
+            <div className="list1" onClick={() => navigate("/service")}>
+              고객지원 Q&A
+            </div>
+            <div className="list2">
+              <div className="icon" onClick={() => navigate("/login")}>
+                <p>LOGIN</p>
+              </div>
+              <div className="icon" onClick={() => navigate("/signup")}>
+                <p>SIGN UP</p>
+              </div>
+              <div className="icon" onClick={() => navigate("/mypage")}>
+                <p>MYPAGE</p>
+              </div>
+            </div>
+          </List>
+          <Menus
+            onMouseEnter={() => setIsHeaderHovered(true)}
+            onMouseLeave={() => setIsHeaderHovered(false)}
+            $isHovered={isHeaderHovered}>
+            <Menu
+              $isHovered={isHeaderHovered}
+              onClick={() => navigate("/about")}>
+              ABOUT US
+            </Menu>
+            <Menu $isHovered={isHeaderHovered} onClick={() => navigate("/diy")}>
+              PET'S DIARY
+            </Menu>
+            <Menu $isHovered={isHeaderHovered} onClick={() => navigate("/map")}>
+              MAPS
+            </Menu>
+            <Menu
+              $isHovered={isHeaderHovered}
+              className="icon"
+              onClick={() => navigate("/book")}>
+              PET'S BOOKS
+            </Menu>
+            <Menu
+              $isHovered={isHeaderHovered}
+              onClick={() => navigate("/quick")}>
+              정기 구독
+            </Menu>
+            <Menu
+              $isHovered={isHeaderHovered}
+              onClick={() => navigate("/service")}>
+              Q&A
+            </Menu>
+          </Menus>
+        </>
+      )}
       <Contain>
         <Main>
           <Outlet />
@@ -483,8 +549,7 @@ const Header = () => {
               flexDirection: "row",
               justifyContent: "space-between",
               width: "80%",
-            }}
-          >
+            }}>
             <div className="linkBox">
               <h1 onClick={() => openModal("개인정보처리방침")}>
                 개인정보처리방침

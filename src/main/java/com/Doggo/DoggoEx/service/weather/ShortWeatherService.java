@@ -41,7 +41,7 @@ public class ShortWeatherService extends WeatherAbstract {
                     for (CityEnum city : CityEnum.values()) {
                         if (city.name().equals(regName)) {
                             locationCode.put(regName, regId);
-//                            System.out.println(regName + " : " + regId);
+                            System.out.println(regName + " : " + regId);
                             break;
                         }
                     }
@@ -74,7 +74,7 @@ public class ShortWeatherService extends WeatherAbstract {
                 String cityName = entry.getKey();
                 String regCode = entry.getValue();
 
-//                System.out.println(cityName + " : " + regCode);
+                System.out.println(cityName + " : " + regCode);
 
 
                 Map<String, String> queryParams = shortQueryParams(regCode, shortDateParams);
@@ -83,6 +83,7 @@ public class ShortWeatherService extends WeatherAbstract {
                 List<String> filteredLines = new ArrayList<>();
 
                 for (String line : lines) {
+
                     if (!line.contains("#") && !line.contains("-99")) {
 
                         filteredLines.add(line);

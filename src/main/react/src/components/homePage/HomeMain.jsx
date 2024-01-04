@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Introduction from "./comps/Introduction";
-import AboutUs from "./comps/aboutUs.jsx/AboutUs";
-import AboutFunctions from "./comps/aboutCalander/AboutFunctions";
 
 import CurrentLocationWeather from "./comps/currentLocationWeather/CurrentLocationWeather";
 import RegionWeather from "./comps/regionWeather/RegionWeather";
@@ -14,13 +12,30 @@ import ChatBotImg from "../../icon/ChatBot.png";
 const SectionContainer = styled.section.withConfig({
   className: "section-container",
 })`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
+  width: ${(props) => props.$width || "98vw"};
   height: ${(props) => props.$height || "50vw"};
   background-color: ${(props) => props.$backGround || "white"};
-  /* border: 1px solid black; */
+  
+  @media (max-width: 768px) {
+    height: 110vw;
+    /* margin-top: -30px; */
+  }
+`;
+
+const StraysSectionContainer = styled(SectionContainer)`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const IntroductionSection = styled(SectionContainer)`
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const ItemContainer = styled.div.attrs({
@@ -28,9 +43,15 @@ const ItemContainer = styled.div.attrs({
 })`
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: ${(props) => props.$width || "100%"};
   height: ${(props) => props.$height || "30%"};
 `;
+
+export const DoggyIcon = ({ image, height }) => (
+  <div className="doggy-container" style={{ width: height, height: height }}>
+    <img src={image} alt="Doggy" className="img" />
+  </div>
+);
 
 const ChatbotBox = styled.div`
   position: fixed;
@@ -67,10 +88,46 @@ const ChatbotIcon = styled.img`
   }
 `;
 
+
+const SwitchWrapper = styled.div`
+  position: relative; // 절대 위치로 설정
+  top: 10px; // 상단에서 10px 떨어진 위치에
+  right: 10px; // 오른쪽에서 10px 떨어진 위치에 배치
+  width: 50px;
+  height: 20px;
+  background-color: #85c6f8;
+  border-radius: 25px;
+  cursor: pointer;
+`;
+
+
+const ToggleButton = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  box-shadow: 2px 4px 15px 3px rgba(0, 0, 0, 0.2);
+  
+  transition: all 0.4s ease-in-out !important; 
+  left: ${(props) => (props.isOn ? "30px" : "0")};
+`;
+
+// 스위치 토글 버튼 컴포넌트
+export const Switch = ({ isOn, onClick }) => (
+  <SwitchWrapper onClick={onClick}>
+    <ToggleButton isOn={isOn} />
+  </SwitchWrapper>
+);
+
+
+
 const HomeMain = () => {
   const [currentAddress, setCurrentAddress] = useState(""); // 상태 정의
   const [showChatbot, setShowChatbot] = useState(false);
-
+  const [showRegionWeather, setShowRegionWeather] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
+  const weatherSectionRef = useRef(null);
   const toggleChatbot = () => {
     setShowChatbot((prev) => !prev);
   };
@@ -79,40 +136,66 @@ const HomeMain = () => {
     setShowChatbot(false);
   };
 
+  const handleResize = () => {
+    setIsMobileView(window.innerWidth <= 768);
+  };
+
+  const toggleWeather = () => {
+    if (window.innerWidth <= 768) {
+      setShowRegionWeather((prev) => !prev);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+
+    // 컴포넌트 언마운트 시에 이벤트 리스너를 정리
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       <CurrentAddressContext.Provider
-        value={{ currentAddress, setCurrentAddress }}>
-        <SectionContainer>
-          <ItemContainer $height="100%">
-            <Introduction />
+        value={{ currentAddress, setCurrentAddress }}
+      >
+        <IntroductionSection $height="100%">
+          <ItemContainer  $height="100%">
+          <Introduction weatherSectionRef={weatherSectionRef} />
           </ItemContainer>
-        </SectionContainer>
-{/* 
-        <SectionContainer $height="35vw" $backGround="#fff">
+        </IntroductionSection>
+
+        <SectionContainer ref={weatherSectionRef} $height="55vw">
           <ItemContainer $height="100%">
-            <AboutUs />
+            {isMobileView ? (
+              showRegionWeather ? (
+                <RegionWeather
+                  isOn={showRegionWeather}
+                  toggleWeather={toggleWeather}
+                  isMobileView={isMobileView}
+                />
+              ) : (
+                <CurrentLocationWeather
+                  isOn={showRegionWeather}
+                  toggleWeather={toggleWeather}
+                  isMobileView={isMobileView}
+                />
+              )
+            ) : (
+              <>
+                <CurrentLocationWeather />
+                <RegionWeather />
+              </>
+            )}
           </ItemContainer>
         </SectionContainer>
 
-        <SectionContainer $backGround="#f2f2f4">
-          <ItemContainer $height="100%">
-            <AboutFunctions />
-          </ItemContainer>
-        </SectionContainer> */}
-
-        <SectionContainer $height = "55vw">
-          <ItemContainer $height ="100%">
-            <CurrentLocationWeather />
-            <RegionWeather />
-          </ItemContainer>
-        </SectionContainer>
-
-        {/* <SectionContainer>
-          <ItemContainer>
+        <StraysSectionContainer $height="50vw" >
+          <ItemContainer $height="100%" $width="80%">
             <Strays />
           </ItemContainer>
-        </SectionContainer> */}
+        </StraysSectionContainer>
       </CurrentAddressContext.Provider>
 
       <ChatbotIcon
