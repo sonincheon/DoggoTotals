@@ -14,6 +14,22 @@ const GetOffHeader = styled.div`
     position: relative;
     margin-top: -3.5vw;
 
+
+    @media (max-width: 1500px) {
+
+    margin-top: -4.5vw;
+    }
+
+    @media (max-width: 1200px) {
+
+    margin-top: -5.5vw;
+    }
+
+    @media (max-width: 1000px) {
+
+    margin-top: -6.2vw;
+    }
+
     @media (max-width: 768px) {
     position: static;
 

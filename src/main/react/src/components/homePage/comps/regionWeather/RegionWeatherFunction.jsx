@@ -102,7 +102,7 @@ const WeatherIcon = styled.img`
   height: 3vw !important;
 
   @media (max-width: 768px) {
-    margin-top: -4vw;
+    margin-top: -3.2vw;
     width: 5vw !important;
     height: 5vw !important;
   }

@@ -325,10 +325,10 @@ const CurrentLocationWeather = ({ isOn, toggleWeather, isMobileView }) => {
           // console.log(text);
           // 두 API 요청을 동시에 호출
           const currentWeatherResponse = axios.get(
-            `http://127.0.0.1:5000/api/weather?x=${coords.x}&y=${coords.y}`
+            `http://127.0.0.1:8111/api/weather2?x=${coords.x}&y=${coords.y}`
           );
           const hourlyWeatherResponse = axios.get(
-            `http://127.0.0.1:5000/api/hourly_weather?x=${coords.x}&y=${coords.y}`
+            `http://127.0.0.1:8111/api/hourly_weather?x=${coords.x}&y=${coords.y}`
           );
 
           // 모든 요청이 완료될 때까지 기다림
