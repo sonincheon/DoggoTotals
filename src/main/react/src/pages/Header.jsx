@@ -455,17 +455,28 @@ const Header = () => {
         <div className="list1" onClick={() => navigate("/service")}>
           고객지원 Q&A
         </div>
-        <div className="list2">
-          <div className="icon" onClick={() => navigate("/login")}>
-            <p>LOGIN</p>
-          </div>
-          <div className="icon" onClick={() => navigate("/signup")}>
-            <p>SIGN UP</p>
-          </div>
-          <div className="icon" onClick={() => navigate("/mypage")}>
-            <p>MYPAGE</p>
-          </div>
-        </div>
+        {email ? (
+                    <div className="list2">
+                    <div className="icon" onClick={logOut}>
+                    <p>LOGOUT</p>
+                    </div>
+                    <div className="icon" onClick={() => navigate("/mypage")}>
+                    <p>MYPAGE</p>
+                    </div>
+                    </div>
+                ) : (
+                    <div className="list2">
+                    <div className="icon" onClick={() => navigate("/login")}>
+                    <p>LOGIN</p>
+                    </div>
+                    <div className="icon" onClick={() => navigate("/signup")}>
+                    <p>SIGN UP</p>
+                    </div>
+                    <div className="icon" onClick={() => navigate("/mypage")}>
+                    <p>MYPAGE</p>
+                    </div>
+                    </div>
+                    )}
       </List>
       <Menus
         onMouseEnter={() => setIsHeaderHovered(true)}

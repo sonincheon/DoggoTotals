@@ -277,6 +277,11 @@ const Exist2 = styled.img`
   text-justify: center;
   border-radius: 100%;
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+      width: 160px;
+      height: 160px;
+    }
 `;
 
 const FileUploadContainer = styled.div`
