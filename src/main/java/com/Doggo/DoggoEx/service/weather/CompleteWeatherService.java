@@ -7,7 +7,9 @@ import java.util.*;
 
 @Service
 public class CompleteWeatherService {
-    public Map<String, List<List<String>>> getCompleteWeather(Map<String, List<List<String>>> completeShort, Map<String, List<List<String>>> completeMiddle) {
+    public Map<String, List<List<String>>> getCompleteWeather(Map<String, List<List<String>>> completeShort,
+                                                              Map<String, List<List<String>>> completeMiddle) {
+
         try {
             System.out.println("완전한 날씨 데이터 취합 시작");
             Map<String, List<List<String>>> completeWeather = new HashMap<>();

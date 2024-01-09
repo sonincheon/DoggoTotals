@@ -122,6 +122,7 @@ const AnimalList = ({ animalType, searchQuery, setSearchQuery }) => {
         const size = 20;
         const moreAnimals = await getAnimals(animalType, page, size);
         setAnimals((prevAnimals) => [...prevAnimals, ...moreAnimals]);
+        console.log(animals);
       
       } catch (error) {
         console.error("Error fetching animals: ", error);

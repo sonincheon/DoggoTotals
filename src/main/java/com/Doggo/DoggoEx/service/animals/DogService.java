@@ -90,20 +90,20 @@ public class DogService {
                 // API 결과값 중에서 BODY 내용만 추출합니다.
                 DogDto[] response = responseEntity.getBody();
 
-                // 응답이 null이거나 빈 배열인 경우 더 이상 처리할 데이터가 없으므로 플래그를 false로 설정합니다.
+                // 응답이 null이거나 빈 배열인 경우 더 이상 처리할 데이터가 없으므로 플래그를 false로 설정
                 if (response == null || response.length == 0) {
                     moreData = false;
                 } else {
-                    // 응답 배열을 순회하면서 각 `DogDto` 객체를 `Dog` 엔티티로 변환하고 저장합니다.
+                    // 응답 배열을 순회하면서 각 `DogDto` 객체를 `Dog` 엔티티로 변환하고 저장
                     for (DogDto dogDto : response) {
                         DogDto korDogDto = engToKorService.dogToKor(dogDto);
                         Dog dog = mapToDogEntity(korDogDto, dogType);
-                        // 변환된 Dog 엔티티를 리포지토리를 통해 데이터베이스에 저장합니다.
+                        // 변환된 Dog 엔티티를 리포지토리를 통해 데이터베이스에 저장
                         dogRepository.save(dog);
                         // 저장된 강아지 정보를 콘솔에 출력합니다.
                         System.out.println("doggy!! : " + dog);
                     }
-                    // 오프셋을 증가시켜 다음 페이지의 데이터를 요청합니다.
+                    // 오프셋을 증가시켜 다음 페이지의 데이터를 요청
                     offset += response.length;
                 }
             }

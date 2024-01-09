@@ -116,7 +116,7 @@ public class MiddleWeatherService extends WeatherAbstract {
             Map<String, List<List<String>>> middleCondition = new HashMap<>();
 
             for (RegionEnum region : RegionEnum.values()) {
-
+                // enumMapper에 정의한 getter를 활용해여 locationCode의 key값을 get 함수의 매개변수로 전달
                 String regCode = locationCode.get(region.getRegionName());
 
                 Map<String, String> queryParams = middleQueryParams(regCode, dateParams);
@@ -185,16 +185,16 @@ public class MiddleWeatherService extends WeatherAbstract {
             // middleTemp 맵의 각 키(도시 이름)에 대해 반복합니다.
             // middleTemp의 Key 값은 수원 : [[날짜,최저,최고],[날짜,최저,최고],[날짜,최저,최
             for (String city : middleTemp.keySet()) {
-                // 특정 도시의 온도 데이터 리스트를 가져옵니다. 이 데이터는 "날짜, 최저온도, 최고온도"의 형식으로 구성된 리스트의 리스트입니다.
+                // 특정 도시의 온도 데이터 리스트를 가져옴 이 데이터는 "날짜, 최저온도, 최고온도"의 형식으로 구성
                 List<List<String>> tempData = middleTemp.get(city);
 
-                // 도시별로 날짜를 키로 하고 날씨 데이터를 값으로 하는 LinkedHashMap을 생성합니다.
-                // LinkedHashMap은 삽입된 순서대로 키와 값을 유지합니다.
+                // 도시별로 날짜를 키로 하고 날씨 데이터를 값으로 하는 LinkedHashMap을 생성
+                // LinkedHashMap은 삽입된 순서대로 키와 값을 유지.
                 Map<String, List<String>> cityWeatherMap = new LinkedHashMap<>();
 
                 // 각 도시의 온도 데이터를 순회합니다.
                 for (List<String> dailyTemp : tempData) {
-                    // 각 항목에서 날짜를 추출합니다. 날짜는 YYYYMMDD 형식입니다.
+                    // 각 항목에서 날짜를 추출 날짜는 YYYYMMDD 형식
                     String date = dailyTemp.get(0);
 
                     // 날짜, 최저온도, 최고온도를 리스트에 저장하고, 추가적인 날씨 정보(오전/오후 날씨 조건과 강수량)를 위한 빈 문자열을 추가합니다.

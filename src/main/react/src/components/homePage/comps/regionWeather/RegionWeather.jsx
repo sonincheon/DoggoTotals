@@ -20,7 +20,7 @@ const ItemBox = styled.div.attrs({
   align-items: center;
   width: 35%;
   @media (max-width: 768px) {
-    width: 80%;
+    width: 100%;
   }
 `;
 
@@ -33,7 +33,10 @@ const Items = styled.div.attrs({
   height: 90%;
   border-radius: 8px;
   box-shadow: 2px 4px 15px 3px rgba(0, 0, 0, 0.2);
-  
+      @media (max-width: 768px) {
+        height: 100%;
+        width: 100%;
+      }
 `;
 const Banner = styled.div`
   display: flex;
@@ -188,8 +191,8 @@ const DayButton = styled.button`
 
 const SwitchPosition = styled.div`
   position: absolute;
-  top: 6vw; // 필요에 따라 조절하세요
-  right: 11vw; // 필요에 따라 조절하세요
+  top: 1vw; // 필요에 따라 조절하세요
+  right: 1.5vw; // 필요에 따라 조절하세요
   z-index: 10; // 다른 내용물 위에 오도록 설정
 `;
 
@@ -210,7 +213,7 @@ const RegionWeather = ({ isOn, toggleWeather, isMobileView }) => {
       try {
         const response = await WeatherAxiosApi.getWeathers();
         // API 응답 확인용 콘솔
-        console.log("API response:", response);
+//         console.log("API response:", response);
         setWeatherData(response);
       } catch (error) {
         console.error("API 응답 실패 :", error);
@@ -235,7 +238,7 @@ const RegionWeather = ({ isOn, toggleWeather, isMobileView }) => {
   // 요일 버튼
   const handleDayButtonClick = (date) => {
     // 요일 클릭시 date 값 전달 확인 콘솔
-    console.log(date);
+//     console.log(date);
     setSelectedDate(date);
   };
 

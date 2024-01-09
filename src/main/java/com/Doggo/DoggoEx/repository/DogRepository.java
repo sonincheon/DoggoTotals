@@ -14,9 +14,13 @@ import java.util.Optional;
 public interface DogRepository extends JpaRepository<Dog, Long> {
     // 품종명으로 검색
     Optional<Dog> findByKoreanName(String koreanName);
+
+
     // 동물 도감 리스트
     @Query("SELECT new com.Doggo.DoggoEx.dto.DogDto(d.id, d.name, d.koreanName, d.imageLink) FROM Dog d ORDER BY d.koreanName ASC")
     List<DogDto> findAllByOrderByNameAsc(Pageable pageable);
+
+
     // 특정단어가 포함된 품종명 리스트
     @Query("SELECT new com.Doggo.DoggoEx.dto.DogDto(d.id, d.name, d.koreanName, d.imageLink) FROM Dog d WHERE d.name LIKE %:keyword% OR d.koreanName LIKE %:keyword% ORDER BY d.koreanName ASC")
     List<DogDto> findByKeyword(@Param("keyword") String keyword);
