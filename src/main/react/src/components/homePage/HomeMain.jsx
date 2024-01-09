@@ -213,22 +213,41 @@ const HomeMain = () => {
           </ItemContainer>
         </IntroductionSection>
 
+{/*         추후에 플라스크 데이터 연동건 확인되면 복구 */}
+{/*          <SectionContainer ref={weatherSectionRef} $height="55vw"> */}
+{/*                   <ItemContainer $height="100%"> */}
+{/*                     {isMobileView ? ( */}
+{/*                       showRegionWeather ? ( */}
+{/*                         <RegionWeather */}
+{/*                           isOn={showRegionWeather} */}
+{/*                           toggleWeather={toggleWeather} */}
+{/*                           isMobileView={isMobileView} */}
+{/*                         /> */}
+{/*                       ) : ( */}
+{/*                         <CurrentLocationWeather */}
+{/*                           isOn={showRegionWeather} */}
+{/*                           toggleWeather={toggleWeather} */}
+{/*                           isMobileView={isMobileView} */}
+{/*                         /> */}
+{/*                       ) */}
+{/*                     ) : ( */}
+{/*                       <> */}
+{/*                         <CurrentLocationWeather /> */}
+{/*                         <RegionWeather /> */}
+{/*                       </> */}
+{/*                     )} */}
+{/*                   </ItemContainer> */}
+{/*                 </SectionContainer> */}
+
+{/* 아래 영역은 복구되면 지울것  */}
         <SectionContainer ref={weatherSectionRef} $height="55vw">
           <ItemContainer $height="100%">
             {isMobileView ? (
-              showRegionWeather ? (
-                <RegionWeather
-                  isOn={showRegionWeather}
-                  toggleWeather={toggleWeather}
-                  isMobileView={isMobileView}
-                />
-              ) : (
-                <CurrentLocationWeather
-                  isOn={showRegionWeather}
-                  toggleWeather={toggleWeather}
-                  isMobileView={isMobileView}
-                />
-              )
+              <RegionWeather
+                isOn={showRegionWeather}
+                toggleWeather={toggleWeather}
+                isMobileView={isMobileView}
+              />
             ) : (
               <>
                 <CurrentLocationWeather />

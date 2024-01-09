@@ -248,11 +248,11 @@ const RegionWeather = ({ isOn, toggleWeather, isMobileView }) => {
         <Banner>
           
           <BannerTitle>
-            {isMobileView && (
-            <SwitchPosition>
-              <Switch isOn={isOn} onClick={toggleWeather} />
-            </SwitchPosition>
-          )}
+{/*             {isMobileView && ( */}
+{/*             <SwitchPosition> */}
+{/*               <Switch isOn={isOn} onClick={toggleWeather} /> */}
+{/*             </SwitchPosition> */}
+{/*           )} */}
             <p>전국 날씨</p>
           </BannerTitle>
 
