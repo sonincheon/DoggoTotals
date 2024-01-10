@@ -443,9 +443,6 @@ const Header = () => {
         <div className="list1" onClick={() => navigate("/diy")}>
           PET'S DIARY
         </div>
-        <div className="list1" onClick={() => navigate("/map")}>
-          MAPS
-        </div>
         <div className="list1" onClick={() => navigate("/book")}>
           PET'S BOOKS
         </div>

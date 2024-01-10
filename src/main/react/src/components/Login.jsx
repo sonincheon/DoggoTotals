@@ -177,6 +177,10 @@ const Button2 = styled.button`
     font-weight: 700;
     background-color: #b3b601;
   }
+
+  @media (max-width: 768px) {
+      display: none;
+    }
 `;
 
 const Box = styled.div`
@@ -274,7 +278,7 @@ const Login = () => {
   };
 
   const Rest_api_key = "afb202ab4753ffdab4ab8549b0395416"; //REST API KEY
-  const redirect_uri = "http://www.petmemoir.store/auth"; //Redirect URI
+  const redirect_uri = "http://www.petmemoir.site/auth"; //Redirect URI
   // oauth 요청 URL
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 
